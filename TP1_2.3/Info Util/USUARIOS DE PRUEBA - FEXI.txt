@@ -1,0 +1,15 @@
+USUARIOS DE PRUEBA - FEXI
+
+ADMINISTRADOR
+
+Usuario: admin001
+Contraseña: admin123
+
+---------------------------------
+
+EMPLEADO
+
+Usuario: empleado001
+Contraseña: 1234
+
+(Primer ingreso = Sí)
