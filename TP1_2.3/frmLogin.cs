@@ -121,24 +121,12 @@ namespace TP1_2._3
 
             if (usuarioEncontrado.TipoUsuario == "General")
             {
-                if (usuarioEncontrado.PrimerIngreso)
-                {
-                    frmCambioContrasena cambio =
-                        new frmCambioContrasena(usuarioEncontrado);
-
-                    cambio.Show();
-
-                    this.Hide();
-                }
-                else
-                {
-                    frmPrincipalGeneral general =
+                frmPrincipalGeneral general =
     new frmPrincipalGeneral(usuarioEncontrado);
 
-                    general.Show();
+                general.Show();
 
-                    this.Hide();
-                }
+                this.Hide();
             }
         }
 
@@ -160,11 +148,11 @@ namespace TP1_2._3
 
         private void lnkRecuperar_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmRecuperarContrasena recuperar = new frmRecuperarContrasena();
-
-            recuperar.Show();
-
-            this.Hide();
+            MessageBox.Show(
+                "Función no disponible.",
+                "Atención",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
     }
 }
