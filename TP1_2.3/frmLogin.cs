@@ -9,6 +9,8 @@ namespace TP1_2._3
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
+
+            //asdasd
             txtUsuario.Focus();
 
             txtUsuario.Clear();
