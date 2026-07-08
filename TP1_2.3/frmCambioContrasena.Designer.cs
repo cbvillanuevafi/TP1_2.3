@@ -107,6 +107,7 @@
             btnConfirmar.TabIndex = 21;
             btnConfirmar.Text = "Confirmar";
             btnConfirmar.UseVisualStyleBackColor = true;
+            btnConfirmar.Click += btnConfirmar_Click;
             // 
             // txtConfirmarContrasena
             // 
