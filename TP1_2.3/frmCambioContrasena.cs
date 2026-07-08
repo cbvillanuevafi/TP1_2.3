@@ -37,7 +37,7 @@ namespace TP1_2._3
                     "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            // me falta donde guardar el cambio de  contraseña, supongo debo esperar el frmregistro?
+            // me falta donde guardar el cambio de  contraseña, supongo debo esperar el frmRegistro?
 
             //MessageBox.Show("La contraseña se guardó correctamente.");
         }
