@@ -42,11 +42,11 @@
             lblMensaje.AutoSize = true;
             lblMensaje.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblMensaje.ForeColor = Color.DarkBlue;
-            lblMensaje.Location = new Point(97, 80);
+            lblMensaje.Location = new Point(85, 107);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(407, 19);
+            lblMensaje.Size = new Size(498, 23);
             lblMensaje.TabIndex = 2;
-            lblMensaje.Text = "\"Primer ingreso al Sistema. Cambie la Contraseña para continuar\"";
+            lblMensaje.Text = "Primer ingreso al Sistema. Cambie la contraseña para continuar.";
             lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblTituloCContraseña
@@ -54,9 +54,9 @@
             lblTituloCContraseña.AutoSize = true;
             lblTituloCContraseña.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTituloCContraseña.ForeColor = Color.DarkBlue;
-            lblTituloCContraseña.Location = new Point(246, 25);
+            lblTituloCContraseña.Location = new Point(281, 33);
             lblTituloCContraseña.Name = "lblTituloCContraseña";
-            lblTituloCContraseña.Size = new Size(81, 41);
+            lblTituloCContraseña.Size = new Size(98, 50);
             lblTituloCContraseña.TabIndex = 3;
             lblTituloCContraseña.Text = "FEXI";
             lblTituloCContraseña.TextAlign = ContentAlignment.MiddleCenter;
@@ -66,9 +66,9 @@
             lblNuevaContrasena.AutoSize = true;
             lblNuevaContrasena.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblNuevaContrasena.ForeColor = Color.DarkBlue;
-            lblNuevaContrasena.Location = new Point(223, 121);
+            lblNuevaContrasena.Location = new Point(255, 161);
             lblNuevaContrasena.Name = "lblNuevaContrasena";
-            lblNuevaContrasena.Size = new Size(122, 19);
+            lblNuevaContrasena.Size = new Size(151, 23);
             lblNuevaContrasena.TabIndex = 4;
             lblNuevaContrasena.Text = "Nueva Contraseña";
             lblNuevaContrasena.TextAlign = ContentAlignment.MiddleCenter;
@@ -76,10 +76,9 @@
             // txtNuevaContrasena
             // 
             txtNuevaContrasena.ForeColor = Color.DarkBlue;
-            txtNuevaContrasena.Location = new Point(163, 156);
-            txtNuevaContrasena.Margin = new Padding(3, 2, 3, 2);
+            txtNuevaContrasena.Location = new Point(186, 208);
             txtNuevaContrasena.Name = "txtNuevaContrasena";
-            txtNuevaContrasena.Size = new Size(263, 23);
+            txtNuevaContrasena.Size = new Size(300, 27);
             txtNuevaContrasena.TabIndex = 5;
             txtNuevaContrasena.UseSystemPasswordChar = true;
             // 
@@ -88,9 +87,9 @@
             lblConfirmarContrasena.AutoSize = true;
             lblConfirmarContrasena.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblConfirmarContrasena.ForeColor = Color.DarkBlue;
-            lblConfirmarContrasena.Location = new Point(214, 194);
+            lblConfirmarContrasena.Location = new Point(245, 259);
             lblConfirmarContrasena.Name = "lblConfirmarContrasena";
-            lblConfirmarContrasena.Size = new Size(144, 19);
+            lblConfirmarContrasena.Size = new Size(178, 23);
             lblConfirmarContrasena.TabIndex = 6;
             lblConfirmarContrasena.Text = "Confirmar Contraseña";
             lblConfirmarContrasena.TextAlign = ContentAlignment.MiddleCenter;
@@ -100,11 +99,10 @@
             btnConfirmar.Cursor = Cursors.Hand;
             btnConfirmar.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnConfirmar.ForeColor = Color.DarkBlue;
-            btnConfirmar.Location = new Point(214, 284);
-            btnConfirmar.Margin = new Padding(3, 2, 3, 2);
+            btnConfirmar.Location = new Point(264, 379);
             btnConfirmar.Name = "btnConfirmar";
-            btnConfirmar.Size = new Size(131, 30);
-            btnConfirmar.TabIndex = 21;
+            btnConfirmar.Size = new Size(150, 40);
+            btnConfirmar.TabIndex = 25;
             btnConfirmar.Text = "Confirmar";
             btnConfirmar.UseVisualStyleBackColor = true;
             btnConfirmar.Click += btnConfirmar_Click;
@@ -112,19 +110,19 @@
             // txtConfirmarContrasena
             // 
             txtConfirmarContrasena.ForeColor = Color.DarkBlue;
-            txtConfirmarContrasena.Location = new Point(163, 227);
-            txtConfirmarContrasena.Margin = new Padding(3, 2, 3, 2);
+            txtConfirmarContrasena.Location = new Point(186, 303);
             txtConfirmarContrasena.Name = "txtConfirmarContrasena";
             txtConfirmarContrasena.PasswordChar = '*';
-            txtConfirmarContrasena.Size = new Size(263, 23);
-            txtConfirmarContrasena.TabIndex = 22;
+            txtConfirmarContrasena.Size = new Size(300, 27);
+            txtConfirmarContrasena.TabIndex = 15;
             txtConfirmarContrasena.UseSystemPasswordChar = true;
             // 
             // frmCambioContrasena
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AcceptButton = btnConfirmar;
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(593, 370);
+            ClientSize = new Size(678, 493);
             ControlBox = false;
             Controls.Add(txtConfirmarContrasena);
             Controls.Add(btnConfirmar);
@@ -134,6 +132,7 @@
             Controls.Add(lblTituloCContraseña);
             Controls.Add(lblMensaje);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmCambioContrasena";

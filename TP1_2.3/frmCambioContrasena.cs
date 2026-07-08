@@ -12,9 +12,12 @@ namespace TP1_2._3
 {
     public partial class frmCambioContrasena : Form
     {
-        public frmCambioContrasena()
+        private Usuario usuarioActual;
+        public frmCambioContrasena(Usuario usuario)
         {
             InitializeComponent();
+
+            usuarioActual = usuario;
         }
 
         private void btnConfirmar_Click(object sender, EventArgs e)
@@ -25,21 +28,31 @@ namespace TP1_2._3
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            
             if (txtNuevaContrasena.Text.Length < 8)
             {
                 MessageBox.Show("La contraseña debe tener al menos 8 caracteres.",
                     "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            
             if (txtNuevaContrasena.Text != txtConfirmarContrasena.Text)
             {
                 MessageBox.Show("Las contraseñas no coinciden.",
                     "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            // me falta donde guardar el cambio de  contraseña, supongo debo esperar el frmRegistro?
+            
+            usuarioActual.Contrasena = txtNuevaContrasena.Text;
+            usuarioActual.PrimerIngreso = false;
 
-            //MessageBox.Show("La contraseña se guardó correctamente.");
+            MessageBox.Show(
+    "La contraseña se cambió correctamente. Inicie sesión nuevamente con su nueva contraseña.",
+    "FEXI",
+    MessageBoxButtons.OK,
+    MessageBoxIcon.Information);
+
+            this.Close();
         }
     }
 }

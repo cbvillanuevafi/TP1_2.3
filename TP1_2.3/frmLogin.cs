@@ -31,7 +31,7 @@ namespace TP1_2._3
                         NombreUsuario = "admin001",
                         Contrasena = "admin123",
                         TipoUsuario = "Administrador",
-                        PrimerIngreso = false
+                        PrimerIngreso = true
                     });
 
                 DatosSistema.Usuarios.Add(
@@ -101,6 +101,18 @@ namespace TP1_2._3
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+
+                return;
+            }
+
+            if (usuarioEncontrado.PrimerIngreso)
+            {
+                frmCambioContrasena cambio = new frmCambioContrasena(usuarioEncontrado);
+                cambio.ShowDialog();
+
+                txtUsuario.Clear();
+                txtContrasena.Clear();
+                txtUsuario.Focus();
 
                 return;
             }
