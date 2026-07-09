@@ -46,11 +46,10 @@ namespace TP1_2._3
 
         private void btnEditarPerfil_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "Función no disponible.",
-                "Atención",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            frmEditarPerfil editar =
+        new frmEditarPerfil(usuarioLogueado);
+
+            editar.ShowDialog();
         }
     }
 }
