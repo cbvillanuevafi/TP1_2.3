@@ -11,5 +11,3 @@ EMPLEADO
 
 Usuario: empleado001
 Contraseña: 1234
-
-(Primer ingreso = Sí)
