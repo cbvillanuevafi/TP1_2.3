@@ -225,9 +225,25 @@ namespace TP1_2._3
                 txtEmail.Focus();
                 return;
             }
+            if (txtAltura.Text.Trim() != "" && !ValidarSoloNumeros(txtAltura.Text.Trim()))
+            {
+                MessageBox.Show("La altura debe ser un valor numérico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtAltura.Focus();
+                return;
+            }
             if (dtpFechaNacimiento.Value > DateTime.Today)
             {
                 MessageBox.Show("La fecha de nacimiento no puede ser futura.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                dtpFechaNacimiento.Focus();
+                return;
+            }
+
+            DateTime hoy = DateTime.Today;
+            int edad = hoy.Year - dtpFechaNacimiento.Value.Year;
+            if (dtpFechaNacimiento.Value.Date > hoy.AddYears(-edad)) edad--;
+            if (edad < 18)
+            {
+                MessageBox.Show("El usuario debe ser mayor de 18 años.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 dtpFechaNacimiento.Focus();
                 return;
             }
@@ -273,7 +289,33 @@ namespace TP1_2._3
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
-            this.Close();
+            LimpiarCampos();
+        }
+
+        private void LimpiarCampos()
+        {
+            txtNombre.Clear();
+            txtApellido.Clear();
+            txtDni.Clear();
+            txtTelefono.Clear();
+            txtEmail.Clear();
+            txtCalle.Clear();
+            txtAltura.Clear();
+            txtPiso.Clear();
+            txtDepartamento.Clear();
+            txtCodPostal.Clear();
+            txtNombreUsuario.Clear();
+            txtContrasena.Clear();
+            cmbGenero.SelectedIndex = -1;
+            cmbTipoUsuario.SelectedIndex = -1;
+            cmbNacionalidad.SelectedIndex = -1;
+            cmbProvincia.SelectedIndex = -1;
+            cmbPartido.Items.Clear();
+            cmbPartido.Text = "";
+            cmbLocalidad.Items.Clear();
+            cmbLocalidad.Text = "";
+            dtpFechaNacimiento.Value = DateTime.Today;
+            txtNombre.Focus();
         }
 
         private string ConstruirDomicilio()

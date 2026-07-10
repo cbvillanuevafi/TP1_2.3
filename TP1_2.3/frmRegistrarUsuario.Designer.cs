@@ -219,6 +219,7 @@ namespace TP1_2._3
             // 
             // cmbGenero
             // 
+            cmbGenero.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbGenero.FormattingEnabled = true;
             cmbGenero.Items.AddRange(new object[] { "Masculino", "Femenino", "Otro" });
             cmbGenero.Location = new Point(241, 134);
@@ -256,8 +257,9 @@ namespace TP1_2._3
             // 
             // cmbTipoUsuario
             // 
+            cmbTipoUsuario.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbTipoUsuario.FormattingEnabled = true;
-            cmbTipoUsuario.Items.AddRange(new object[] { "Administrador", "General" });
+            cmbTipoUsuario.Items.AddRange(new object[] { "Administrador", "Empleado" });
             cmbTipoUsuario.Location = new Point(241, 178);
             cmbTipoUsuario.Margin = new Padding(3, 2, 3, 2);
             cmbTipoUsuario.Name = "cmbTipoUsuario";
@@ -305,6 +307,7 @@ namespace TP1_2._3
             // 
             // cmbNacionalidad
             // 
+            cmbNacionalidad.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbNacionalidad.FormattingEnabled = true;
             cmbNacionalidad.Items.AddRange(new object[] { "Argentina", "Brasil", "Chile", "Uruguay", "Paraguay", "Bolivia", "Colombia", "México", "Perú", "Venezuela" });
             cmbNacionalidad.Location = new Point(13, 44);
@@ -324,6 +327,7 @@ namespace TP1_2._3
             // 
             // cmbProvincia
             // 
+            cmbProvincia.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbProvincia.FormattingEnabled = true;
             cmbProvincia.Items.AddRange(new object[] { "Buenos Aires", "Córdoba", "Santa Fe", "Mendoza", "Tucumán" });
             cmbProvincia.Location = new Point(241, 44);
@@ -344,6 +348,7 @@ namespace TP1_2._3
             // 
             // cmbPartido
             // 
+            cmbPartido.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPartido.FormattingEnabled = true;
             cmbPartido.Location = new Point(13, 88);
             cmbPartido.Margin = new Padding(3, 2, 3, 2);
@@ -363,6 +368,7 @@ namespace TP1_2._3
             // 
             // cmbLocalidad
             // 
+            cmbLocalidad.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbLocalidad.FormattingEnabled = true;
             cmbLocalidad.Location = new Point(241, 88);
             cmbLocalidad.Margin = new Padding(3, 2, 3, 2);
