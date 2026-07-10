@@ -46,7 +46,7 @@ namespace TP1_2._3
                         FechaNacimiento = new DateTime(1998, 8, 15),
                         NombreUsuario = "empleado001",
                         Contrasena = "1234",
-                        TipoUsuario = "General",
+                        TipoUsuario = "Empleado",
                         PrimerIngreso = true
                     });
 
@@ -133,7 +133,7 @@ namespace TP1_2._3
                 this.Hide();
             }
 
-            if (usuarioEncontrado.TipoUsuario == "General")
+            if (usuarioEncontrado.TipoUsuario == "Empleado")
             {
                 frmPrincipalGeneral general =
     new frmPrincipalGeneral(usuarioEncontrado);
