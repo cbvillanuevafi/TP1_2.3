@@ -8,14 +8,14 @@ using System.Windows.Forms;
 
 namespace TP1_2._3
 {
-    public partial class frmRecuperarContraseña : Form
+    public partial class frmRecuperarContrasena : Form
     {
-        public frmRecuperarContraseña()
+        public frmRecuperarContrasena()
         {
             InitializeComponent();
         }
 
-        private void frmRecuperarContraseña_Load(object sender, EventArgs e)
+        private void frmRecuperarContrasena_Load(object sender, EventArgs e)
         {
 
         }

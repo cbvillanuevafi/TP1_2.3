@@ -156,11 +156,10 @@ namespace TP1_2._3
 
         private void lnkRecuperar_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show(
-                "Función no disponible.",
-                "Atención",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            frmRecuperarContrasena recuperar =
+        new frmRecuperarContrasena();
+
+            recuperar.ShowDialog();
         }
     }
 }
