@@ -35,8 +35,6 @@
             lblConfirmarContrasena = new Label();
             btnConfirmar = new Button();
             txtConfirmarContrasena = new TextBox();
-            btnMostrarNueva = new Button();
-            btnMostrarConfirmar = new Button();
             SuspendLayout();
             // 
             // lblMensaje
@@ -44,11 +42,11 @@
             lblMensaje.AutoSize = true;
             lblMensaje.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblMensaje.ForeColor = Color.DarkBlue;
-            lblMensaje.Location = new Point(187, 107);
+            lblMensaje.Location = new Point(85, 107);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(296, 23);
+            lblMensaje.Size = new Size(498, 23);
             lblMensaje.TabIndex = 2;
-            lblMensaje.Text = "Cambie la contraseña para continuar.";
+            lblMensaje.Text = "Primer ingreso al Sistema. Cambie la contraseña para continuar.";
             lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblTituloCContraseña
@@ -56,7 +54,7 @@
             lblTituloCContraseña.AutoSize = true;
             lblTituloCContraseña.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTituloCContraseña.ForeColor = Color.DarkBlue;
-            lblTituloCContraseña.Location = new Point(283, 33);
+            lblTituloCContraseña.Location = new Point(281, 33);
             lblTituloCContraseña.Name = "lblTituloCContraseña";
             lblTituloCContraseña.Size = new Size(98, 50);
             lblTituloCContraseña.TabIndex = 3;
@@ -80,9 +78,9 @@
             txtNuevaContrasena.ForeColor = Color.DarkBlue;
             txtNuevaContrasena.Location = new Point(186, 208);
             txtNuevaContrasena.Name = "txtNuevaContrasena";
-            txtNuevaContrasena.PasswordChar = '*';
             txtNuevaContrasena.Size = new Size(300, 27);
             txtNuevaContrasena.TabIndex = 5;
+            txtNuevaContrasena.UseSystemPasswordChar = true;
             // 
             // lblConfirmarContrasena
             // 
@@ -117,32 +115,7 @@
             txtConfirmarContrasena.PasswordChar = '*';
             txtConfirmarContrasena.Size = new Size(300, 27);
             txtConfirmarContrasena.TabIndex = 15;
-            // 
-            // btnMostrarNueva
-            // 
-            btnMostrarNueva.AutoSize = true;
-            btnMostrarNueva.ForeColor = Color.DarkBlue;
-            btnMostrarNueva.Location = new Point(492, 206);
-            btnMostrarNueva.Name = "btnMostrarNueva";
-            btnMostrarNueva.Size = new Size(45, 30);
-            btnMostrarNueva.TabIndex = 26;
-            btnMostrarNueva.TabStop = false;
-            btnMostrarNueva.Text = "Ver";
-            btnMostrarNueva.UseVisualStyleBackColor = true;
-            btnMostrarNueva.Click += btnMostrarNueva_Click;
-            // 
-            // btnMostrarConfirmar
-            // 
-            btnMostrarConfirmar.AutoSize = true;
-            btnMostrarConfirmar.ForeColor = Color.DarkBlue;
-            btnMostrarConfirmar.Location = new Point(492, 300);
-            btnMostrarConfirmar.Name = "btnMostrarConfirmar";
-            btnMostrarConfirmar.Size = new Size(45, 30);
-            btnMostrarConfirmar.TabIndex = 27;
-            btnMostrarConfirmar.TabStop = false;
-            btnMostrarConfirmar.Text = "Ver";
-            btnMostrarConfirmar.UseVisualStyleBackColor = true;
-            btnMostrarConfirmar.Click += btnMostrarConfirmar_Click;
+            txtConfirmarContrasena.UseSystemPasswordChar = true;
             // 
             // frmCambioContrasena
             // 
@@ -151,8 +124,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(678, 493);
             ControlBox = false;
-            Controls.Add(btnMostrarConfirmar);
-            Controls.Add(btnMostrarNueva);
             Controls.Add(txtConfirmarContrasena);
             Controls.Add(btnConfirmar);
             Controls.Add(lblConfirmarContrasena);
@@ -180,7 +151,5 @@
         private Label lblConfirmarContrasena;
         private Button btnConfirmar;
         private TextBox txtConfirmarContrasena;
-        private Button btnMostrarNueva;
-        private Button btnMostrarConfirmar;
     }
 }

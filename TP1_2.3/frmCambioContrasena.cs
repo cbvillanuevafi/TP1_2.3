@@ -54,33 +54,5 @@ namespace TP1_2._3
 
             this.Close();
         }
-
-        private void btnMostrarNueva_Click(object sender, EventArgs e)
-        {
-            if (txtNuevaContrasena.PasswordChar == '*')
-            {
-                txtNuevaContrasena.PasswordChar = '\0';
-                btnMostrarNueva.Text = "Ocultar";
-            }
-            else
-            {
-                txtNuevaContrasena.PasswordChar = '*';
-                btnMostrarNueva.Text = "Ver";
-            }
-        }
-
-        private void btnMostrarConfirmar_Click(object sender, EventArgs e)
-        {
-            if (txtConfirmarContrasena.PasswordChar == '*')
-            {
-                txtConfirmarContrasena.PasswordChar = '\0';
-                btnMostrarConfirmar.Text = "Ocultar";
-            }
-            else
-            {
-                txtConfirmarContrasena.PasswordChar = '*';
-                btnMostrarConfirmar.Text = "Ver";
-            }
-        }
     }
 }
