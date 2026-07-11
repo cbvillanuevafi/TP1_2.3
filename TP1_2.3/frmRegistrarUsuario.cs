@@ -289,6 +289,13 @@ namespace TP1_2._3
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
+            MessageBox.Show(
+    "Se enviaron las credenciales al correo electrónico:\n\n" +
+    txtEmail.Text,
+    "FEXI",
+    MessageBoxButtons.OK,
+    MessageBoxIcon.Information);
+
             LimpiarCampos();
         }
 
