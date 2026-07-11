@@ -28,21 +28,21 @@ namespace TP1_2._3
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+
             if (txtNuevaContrasena.Text.Length < 8)
             {
                 MessageBox.Show("La contraseña debe tener al menos 8 caracteres.",
                     "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+
             if (txtNuevaContrasena.Text != txtConfirmarContrasena.Text)
             {
                 MessageBox.Show("Las contraseñas no coinciden.",
                     "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+
             usuarioActual.Contrasena = txtNuevaContrasena.Text;
             usuarioActual.PrimerIngreso = false;
 
@@ -53,6 +53,34 @@ namespace TP1_2._3
     MessageBoxIcon.Information);
 
             this.Close();
+        }
+
+        private void btnMostrarNueva_Click(object sender, EventArgs e)
+        {
+            if (txtNuevaContrasena.PasswordChar == '*')
+            {
+                txtNuevaContrasena.PasswordChar = '\0';
+                btnMostrarNueva.Text = "Ocultar";
+            }
+            else
+            {
+                txtNuevaContrasena.PasswordChar = '*';
+                btnMostrarNueva.Text = "Ver";
+            }
+        }
+
+        private void btnMostrarConfirmar_Click(object sender, EventArgs e)
+        {
+            if (txtConfirmarContrasena.PasswordChar == '*')
+            {
+                txtConfirmarContrasena.PasswordChar = '\0';
+                btnMostrarConfirmar.Text = "Ocultar";
+            }
+            else
+            {
+                txtConfirmarContrasena.PasswordChar = '*';
+                btnMostrarConfirmar.Text = "Ver";
+            }
         }
     }
 }
