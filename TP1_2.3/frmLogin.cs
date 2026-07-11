@@ -109,12 +109,6 @@ namespace TP1_2._3
             {
                 frmCambioContrasena cambio = new frmCambioContrasena(usuarioEncontrado);
                 cambio.ShowDialog();
-
-                txtUsuario.Clear();
-                txtContrasena.Clear();
-                txtUsuario.Focus();
-
-                return;
             }
 
             //        MessageBox.Show(

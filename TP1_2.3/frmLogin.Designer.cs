@@ -106,10 +106,11 @@
             // 
             // btnMostrar
             // 
+            btnMostrar.AutoSize = true;
             btnMostrar.ForeColor = Color.DarkBlue;
             btnMostrar.Location = new Point(395, 237);
             btnMostrar.Name = "btnMostrar";
-            btnMostrar.Size = new Size(45, 27);
+            btnMostrar.Size = new Size(45, 30);
             btnMostrar.TabIndex = 11;
             btnMostrar.TabStop = false;
             btnMostrar.Text = "Ver";

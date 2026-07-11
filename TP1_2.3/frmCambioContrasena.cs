@@ -47,7 +47,7 @@ namespace TP1_2._3
             usuarioActual.PrimerIngreso = false;
 
             MessageBox.Show(
-    "La contraseña se cambió correctamente. Inicie sesión nuevamente con su nueva contraseña.",
+    "La contraseña se cambió correctamente.",
     "FEXI",
     MessageBoxButtons.OK,
     MessageBoxIcon.Information);
