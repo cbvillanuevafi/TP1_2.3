@@ -26,6 +26,7 @@ namespace TP1_2._3
         //Evento que pregunta si desea verdaderamente salir o no
         private void frmRecuperarContrasena_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //1er valor "cerrarSinConfirmar" falso, no entra al if por lo tanto el evento si se ejecuta
             if (cerrarSinConfirmar)
                 return;
 
