@@ -204,8 +204,7 @@
             Controls.Add(lblNombreRecu);
             Name = "frmRecuperarContrasena";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FEXI - Recuperar Contraseña";
-            Load += frmRecuperarContrasena_Load;
+            FormClosing += frmRecuperarContrasena_FormClosing;
             ResumeLayout(false);
             PerformLayout();
         }
