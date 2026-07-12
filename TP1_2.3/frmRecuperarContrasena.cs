@@ -47,7 +47,7 @@ namespace TP1_2._3
         {
             if (string.IsNullOrEmpty(txtNombreusuario.Text))
             {
-                MessageBox.Show("Para Guardar debe Ingresar el Nombre de usuario registrado",
+                MessageBox.Show("Para guardar debe ingresar el nombre de usuario registrado.",
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -56,7 +56,7 @@ namespace TP1_2._3
             }
             if (string.IsNullOrEmpty(txtCodigoenviado.Text))
             {
-                MessageBox.Show("Para Guardar debe Ingresar el Codigo que recibio",
+                MessageBox.Show("Para guardar debe ingresar el código que recibió.",
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -65,7 +65,7 @@ namespace TP1_2._3
             }
             if (string.IsNullOrEmpty(txtContraseñanueva.Text))
             {
-                MessageBox.Show("Para Guardar ingrese su nueva contraseña",
+                MessageBox.Show("Para guardar ingrese su nueva contraseña.",
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -74,7 +74,7 @@ namespace TP1_2._3
             }
             if (string.IsNullOrEmpty(txtConfirmarcontraseña.Text))
             {
-                MessageBox.Show("Para Guardar ingrese la confirmacion de su contraseña",
+                MessageBox.Show("Para guardar ingrese la confirmación de su contraseña.",
                     "Error", 
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -131,7 +131,7 @@ namespace TP1_2._3
             this.Close();
 
 
-            MessageBox.Show("Deberas Inciar Sesion nuevamante");
+            MessageBox.Show("Debe iniciar sesión nuevamente.");
 
         }
 
@@ -161,7 +161,7 @@ namespace TP1_2._3
 
             if (usuarioEncontrado != null)
             {
-                MessageBox.Show("El código fue enviado a tu mail registrado.",
+                MessageBox.Show("El código fue enviado al email registrado.",
                                 "RECUPERAR CONTRASEÑA",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
