@@ -102,6 +102,7 @@
             btnEnviarcodigo.TabIndex = 5;
             btnEnviarcodigo.Text = "Enviar Codigo";
             btnEnviarcodigo.UseVisualStyleBackColor = false;
+            btnEnviarcodigo.Click += btnEnviarcodigo_Click;
             // 
             // label3
             // 

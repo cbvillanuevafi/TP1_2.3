@@ -37,7 +37,7 @@ namespace TP1_2._3
 
         private void btnConfirmar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtNombreusuario.Text)) 
+            if (string.IsNullOrEmpty(txtNombreusuario.Text))
             {
                 MessageBox.Show("Para Guardar debe Ingresar el Nombre de usuario registrado",
                     "Error",
@@ -72,6 +72,46 @@ namespace TP1_2._3
             }
             MessageBox.Show("Modificacion de Contraseña exitosa");
 
+        }
+
+        private void btnEnviarcodigo_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNombreusuario.Text))
+            {
+                MessageBox.Show("Ingrese un nombre de usuario.",
+                                "RECUPERAR CONTRASEÑA",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+
+                txtNombreusuario.Focus();
+                return;
+            }
+
+            Usuario usuarioEncontrado = null;
+
+            foreach (Usuario usuario in DatosSistema.Usuarios)
+            {
+                if (usuario.NombreUsuario.Equals(txtNombreusuario.Text.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    usuarioEncontrado = usuario;
+                    break;
+                }
+            }
+
+            if (usuarioEncontrado != null)
+            {
+                MessageBox.Show("El código fue enviado a tu mail registrado.",
+                                "RECUPERAR CONTRASEÑA",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Usuario inexistente en el sistema.",
+                                "ERROR",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
         }
     }
 }
