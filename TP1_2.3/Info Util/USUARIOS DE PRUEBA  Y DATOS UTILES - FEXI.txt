@@ -11,3 +11,7 @@ EMPLEADO
 
 Usuario: empleado001
 Contraseña: 1234
+
+---------------------------------
+
+Código verificador: 1234
