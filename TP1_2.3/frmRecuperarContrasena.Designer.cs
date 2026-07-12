@@ -42,6 +42,7 @@
             txtConfirmarcontraseña = new TextBox();
             lblCodigoenviado = new Label();
             txtCodigoenviado = new TextBox();
+            btnValidarcodigo = new Button();
             SuspendLayout();
             // 
             // lblNombreRecu
@@ -68,6 +69,7 @@
             // 
             // txtNombreusuario
             // 
+            txtNombreusuario.Cursor = Cursors.IBeam;
             txtNombreusuario.Location = new Point(12, 80);
             txtNombreusuario.Name = "txtNombreusuario";
             txtNombreusuario.Size = new Size(215, 23);
@@ -75,6 +77,7 @@
             // 
             // txtContraseñanueva
             // 
+            txtContraseñanueva.Cursor = Cursors.IBeam;
             txtContraseñanueva.Enabled = false;
             txtContraseñanueva.Location = new Point(12, 240);
             txtContraseñanueva.Name = "txtContraseñanueva";
@@ -95,6 +98,7 @@
             // btnEnviarcodigo
             // 
             btnEnviarcodigo.BackColor = Color.RoyalBlue;
+            btnEnviarcodigo.Cursor = Cursors.Hand;
             btnEnviarcodigo.ForeColor = Color.Black;
             btnEnviarcodigo.Location = new Point(12, 109);
             btnEnviarcodigo.Name = "btnEnviarcodigo";
@@ -112,9 +116,9 @@
             label3.ForeColor = Color.DarkBlue;
             label3.Location = new Point(247, 130);
             label3.Name = "label3";
-            label3.Size = new Size(197, 21);
+            label3.Size = new Size(204, 21);
             label3.TabIndex = 7;
-            label3.Text = "¿Olvidate tu contraseña?";
+            label3.Text = "¿Olvidaste tu contraseña?";
             // 
             // lblmensaje
             // 
@@ -138,6 +142,7 @@
             // 
             // btnVolver
             // 
+            btnVolver.Cursor = Cursors.Hand;
             btnVolver.Location = new Point(247, 330);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(180, 26);
@@ -157,6 +162,7 @@
             // 
             // txtConfirmarcontraseña
             // 
+            txtConfirmarcontraseña.Cursor = Cursors.IBeam;
             txtConfirmarcontraseña.Enabled = false;
             txtConfirmarcontraseña.Location = new Point(12, 284);
             txtConfirmarcontraseña.Name = "txtConfirmarcontraseña";
@@ -168,7 +174,7 @@
             // 
             lblCodigoenviado.AutoSize = true;
             lblCodigoenviado.ForeColor = Color.DarkBlue;
-            lblCodigoenviado.Location = new Point(65, 161);
+            lblCodigoenviado.Location = new Point(65, 151);
             lblCodigoenviado.Name = "lblCodigoenviado";
             lblCodigoenviado.Size = new Size(91, 15);
             lblCodigoenviado.TabIndex = 14;
@@ -176,19 +182,35 @@
             // 
             // txtCodigoenviado
             // 
+            txtCodigoenviado.Cursor = Cursors.IBeam;
             txtCodigoenviado.Enabled = false;
-            txtCodigoenviado.Location = new Point(12, 179);
+            txtCodigoenviado.Location = new Point(12, 169);
             txtCodigoenviado.Name = "txtCodigoenviado";
             txtCodigoenviado.PlaceholderText = "Ingrese el codigo recibido";
             txtCodigoenviado.Size = new Size(215, 23);
             txtCodigoenviado.TabIndex = 15;
             txtCodigoenviado.TextAlign = HorizontalAlignment.Center;
             // 
+            // btnValidarcodigo
+            // 
+            btnValidarcodigo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnValidarcodigo.BackColor = SystemColors.ActiveCaption;
+            btnValidarcodigo.Cursor = Cursors.Hand;
+            btnValidarcodigo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnValidarcodigo.Location = new Point(12, 196);
+            btnValidarcodigo.Name = "btnValidarcodigo";
+            btnValidarcodigo.Size = new Size(215, 23);
+            btnValidarcodigo.TabIndex = 16;
+            btnValidarcodigo.Text = "Validar";
+            btnValidarcodigo.UseVisualStyleBackColor = false;
+            btnValidarcodigo.Click += btnValidarcodigo_Click;
+            // 
             // frmRecuperarContrasena
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(456, 368);
+            Controls.Add(btnValidarcodigo);
             Controls.Add(txtCodigoenviado);
             Controls.Add(lblCodigoenviado);
             Controls.Add(txtConfirmarcontraseña);
@@ -226,5 +248,6 @@
         private TextBox txtConfirmarcontraseña;
         private Label lblCodigoenviado;
         private TextBox txtCodigoenviado;
+        private Button btnValidarcodigo;
     }
 }
