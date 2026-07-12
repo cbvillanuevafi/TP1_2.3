@@ -75,13 +75,13 @@ namespace TP1_2._3
             if (string.IsNullOrEmpty(txtConfirmarcontraseña.Text))
             {
                 MessageBox.Show("Para guardar ingrese la confirmación de su contraseña.",
-                    "Error", 
+                    "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 txtConfirmarcontraseña.Focus();
                 return;
             }
-            
+
 
 
 
@@ -111,8 +111,8 @@ namespace TP1_2._3
             }
 
 
-            foreach(Usuario usuario in DatosSistema.Usuarios)
-{
+            foreach (Usuario usuario in DatosSistema.Usuarios)
+            {
                 if (usuario.NombreUsuario.Equals(txtNombreusuario.Text.Trim(), StringComparison.OrdinalIgnoreCase))
                 {
                     usuario.Contrasena = txtContraseñanueva.Text;
@@ -132,6 +132,17 @@ namespace TP1_2._3
 
 
             MessageBox.Show("Debe iniciar sesión nuevamente.");
+
+
+            foreach (Usuario usuario in DatosSistema.Usuarios)
+            {
+                if (usuario.NombreUsuario.Equals(txtNombreusuario.Text.Trim(),
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    usuario.Contrasena = txtContraseñanueva.Text;
+                    break;
+                }
+            }
 
         }
 
@@ -215,7 +226,7 @@ namespace TP1_2._3
                 // Bloqueaamos el código para que no pueda modificarlo
                 txtCodigoenviado.Enabled = false;
 
-                
+
                 txtContraseñanueva.Focus();
             }
             //De lo contrario se equivoco y le mostramos un mensaje de error
@@ -229,6 +240,16 @@ namespace TP1_2._3
                 txtCodigoenviado.Clear();
                 txtCodigoenviado.Focus();
             }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnVolver_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
