@@ -1,3 +1,20 @@
+TP1: FEXI
+
+Integrantes:
+
+Camila Villanueva
+Marsi Ferreira
+Nahuel Ponce
+Maximiliano Montiel
+
+---------------------------------
+
+Presuposición: Si el usuario cambia su contraseña a traves del link "¿Olvidaste tu contraseña?" del login y todavia no realizo su primer login
+			   asumimos que no es necesario el cambio de contraseña obligatorio luego del primer login, por lo que se derivara al usuario a 
+			   la pantalla principal del rol correspondiente.
+
+---------------------------------
+
 USUARIOS DE PRUEBA - FEXI
 
 ADMINISTRADOR
