@@ -116,6 +116,7 @@ namespace TP1_2._3
                 if (usuario.NombreUsuario.Equals(txtNombreusuario.Text.Trim(), StringComparison.OrdinalIgnoreCase))
                 {
                     usuario.Contrasena = txtContraseñanueva.Text;
+                    usuario.PrimerIngreso = false;
                     break;
                 }
             }
@@ -132,17 +133,6 @@ namespace TP1_2._3
 
 
             MessageBox.Show("Debe iniciar sesión nuevamente.");
-
-
-            foreach (Usuario usuario in DatosSistema.Usuarios)
-            {
-                if (usuario.NombreUsuario.Equals(txtNombreusuario.Text.Trim(),
-                    StringComparison.OrdinalIgnoreCase))
-                {
-                    usuario.Contrasena = txtContraseñanueva.Text;
-                    break;
-                }
-            }
 
         }
 
