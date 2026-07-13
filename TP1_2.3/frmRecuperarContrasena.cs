@@ -9,7 +9,6 @@ using System.Windows.Forms;
 namespace TP1_2._3
 {
 
-
     public partial class frmRecuperarContrasena : Form
 
     {
@@ -21,6 +20,8 @@ namespace TP1_2._3
         public frmRecuperarContrasena()
         {
             InitializeComponent();
+
+            btnValidarcodigo.Enabled = false;
         }
 
         //Evento que pregunta si desea verdaderamente salir o no
@@ -174,9 +175,7 @@ namespace TP1_2._3
                 //este desabilita el campo del usuario si es correcto la verificacion del mismo
                 txtNombreusuario.Enabled = false;
 
-
-
-
+                btnValidarcodigo.Enabled = true;
             }
             else
             {

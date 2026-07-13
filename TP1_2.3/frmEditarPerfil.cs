@@ -24,7 +24,7 @@ namespace TP1_2._3
         {
             { "La Plata", new[] { "La Plata", "Berisso", "Ensenada" } },
             { "Morón", new[] { "Morón", "Haedo", "Castelar" } },
-            { "Lomas de Zamora", new[] { "Lomas de Zamora", "Lanús", "Avellaneda" } },
+            { "Lomas de Zamora", new[] { "Lomas de Zamora", "Banfield", "Llavallol", "Otro" } },
             { "Quilmes", new[] { "Quilmes", "Bernal", "Don Bosco" } },
             { "San Isidro", new[] { "San Isidro", "Vicente López", "Martínez" } },
             { "Córdoba Capital", new[] { "Córdoba Capital", "Villa Carlos Paz" } },

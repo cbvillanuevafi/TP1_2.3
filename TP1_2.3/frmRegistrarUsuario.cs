@@ -20,7 +20,7 @@ namespace TP1_2._3
         {
             { "La Plata", new[] { "La Plata", "Berisso", "Ensenada" } },
             { "Morón", new[] { "Morón", "Haedo", "Castelar" } },
-            { "Lomas de Zamora", new[] { "Lomas de Zamora", "Lanús", "Avellaneda" } },
+            { "Lomas de Zamora", new[] { "Lomas de Zamora", "Banfield", "Llavallol", "Otro" } },
             { "Quilmes", new[] { "Quilmes", "Bernal", "Don Bosco" } },
             { "San Isidro", new[] { "San Isidro", "Vicente López", "Martínez" } },
             { "Córdoba Capital", new[] { "Córdoba Capital", "Villa Carlos Paz" } },
@@ -229,6 +229,17 @@ namespace TP1_2._3
             {
                 MessageBox.Show("La altura debe ser un valor numérico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtAltura.Focus();
+                return;
+            }
+            if (txtCodPostal.Text.Trim().Length > 8)
+            {
+                MessageBox.Show(
+                    "El código postal no puede superar los 8 caracteres.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                txtCodPostal.Focus();
                 return;
             }
             if (dtpFechaNacimiento.Value > DateTime.Today)
