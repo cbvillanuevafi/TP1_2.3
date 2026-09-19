@@ -15,43 +15,6 @@ namespace TP1_2._3
 
             txtUsuario.Clear();
             txtContrasena.Clear();
-
-            if (!DatosSistema.DatosInicializados)
-            {
-                DatosSistema.Usuarios.Add(
-                    new Usuario()
-                    {
-                        Nombre = "Administrador",
-                        Apellido = "Sistema",
-                        Dni = "12345678",
-                        Telefono = "1123456789",
-                        Email = "admin@fexi.com",
-                        Genero = "Masculino",
-                        FechaNacimiento = new DateTime(1990, 5, 20),
-                        NombreUsuario = "admin001",
-                        Contrasena = "admin123",
-                        TipoUsuario = "Administrador",
-                        PrimerIngreso = true
-                    });
-
-                DatosSistema.Usuarios.Add(
-                    new Usuario()
-                    {
-                        Nombre = "Juan",
-                        Apellido = "Perez",
-                        Dni = "30123456",
-                        Telefono = "1198765432",
-                        Email = "juan@gmail.com",
-                        Genero = "Masculino",
-                        FechaNacimiento = new DateTime(1998, 8, 15),
-                        NombreUsuario = "empleado001",
-                        Contrasena = "1234",
-                        TipoUsuario = "Empleado",
-                        PrimerIngreso = true
-                    });
-
-                DatosSistema.DatosInicializados = true;
-            }
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -82,17 +45,10 @@ namespace TP1_2._3
                 return;
             }
 
-            Usuario usuarioEncontrado = null;
-
-            foreach (Usuario usuario in DatosSistema.Usuarios)
-            {
-                if (usuario.NombreUsuario == txtUsuario.Text
-                    && usuario.Contrasena == txtContrasena.Text)
-                {
-                    usuarioEncontrado = usuario;
-                    break;
-                }
-            }
+            Usuario usuarioEncontrado =
+                AccesoDatos.ObtenerUsuarioPorCredenciales(
+                    txtUsuario.Text,
+                    txtContrasena.Text);
 
             if (usuarioEncontrado == null)
             {

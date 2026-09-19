@@ -112,14 +112,11 @@ namespace TP1_2._3
             }
 
 
-            foreach (Usuario usuario in DatosSistema.Usuarios)
+            if (!AccesoDatos.ActualizarContrasenaPorNombreUsuario(
+                txtNombreusuario.Text.Trim(),
+                txtContraseñanueva.Text))
             {
-                if (usuario.NombreUsuario.Equals(txtNombreusuario.Text.Trim(), StringComparison.OrdinalIgnoreCase))
-                {
-                    usuario.Contrasena = txtContraseñanueva.Text;
-                    usuario.PrimerIngreso = false;
-                    break;
-                }
+                return;
             }
 
             MessageBox.Show("Modificación de contraseña exitosa.",
@@ -149,19 +146,7 @@ namespace TP1_2._3
                 txtNombreusuario.Focus();
                 return;
             }
-            //recorremos la lista de usuarios
-            Usuario usuarioEncontrado = null;
-
-            foreach (Usuario usuario in DatosSistema.Usuarios)
-            {
-                if (usuario.NombreUsuario.Equals(txtNombreusuario.Text.Trim(), StringComparison.OrdinalIgnoreCase))
-                {
-                    usuarioEncontrado = usuario;
-                    break;
-                }
-            }
-
-            if (usuarioEncontrado != null)
+            if (AccesoDatos.ExisteUsuario(txtNombreusuario.Text.Trim()))
             {
                 MessageBox.Show("El código fue enviado al email registrado.",
                                 "RECUPERAR CONTRASEÑA",

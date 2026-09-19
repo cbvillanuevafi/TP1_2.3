@@ -43,6 +43,13 @@ namespace TP1_2._3
                 return;
             }
 
+            if (!AccesoDatos.ActualizarContrasena(
+                usuarioActual.IdUsuario,
+                txtNuevaContrasena.Text))
+            {
+                return;
+            }
+
             usuarioActual.Contrasena = txtNuevaContrasena.Text;
             usuarioActual.PrimerIngreso = false;
 

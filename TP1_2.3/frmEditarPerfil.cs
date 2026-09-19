@@ -214,6 +214,11 @@ namespace TP1_2._3
             usuarioEditar.FechaNacimiento = dtpFechaNacimiento.Value;
             usuarioEditar.Domicilio = ConstruirDomicilio();
 
+            if (!AccesoDatos.ActualizarPerfil(usuarioEditar))
+            {
+                return;
+            }
+
             MessageBox.Show("Perfil actualizado correctamente.", "FEXI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }

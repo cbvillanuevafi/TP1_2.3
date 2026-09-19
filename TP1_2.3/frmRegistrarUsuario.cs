@@ -98,12 +98,7 @@ namespace TP1_2._3
 
         private bool ExisteUsuario(string nombreUsuario)
         {
-            foreach (Usuario u in DatosSistema.Usuarios)
-            {
-                if (u.NombreUsuario == nombreUsuario)
-                    return true;
-            }
-            return false;
+            return AccesoDatos.ExisteUsuario(nombreUsuario);
         }
 
         private string GenerarContrasena()
@@ -260,14 +255,11 @@ namespace TP1_2._3
             }
 
             // Verificar DNI único
-            foreach (Usuario u in DatosSistema.Usuarios)
+            if (AccesoDatos.ExisteDni(txtDni.Text.Trim()))
             {
-                if (u.Dni == txtDni.Text.Trim())
-                {
-                    MessageBox.Show("El DNI ya está registrado en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtDni.Focus();
-                    return;
-                }
+                MessageBox.Show("El DNI ya está registrado en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtDni.Focus();
+                return;
             }
 
             // Generar credenciales
@@ -290,7 +282,10 @@ namespace TP1_2._3
                 Contrasena = txtContrasena.Text
             };
 
-            DatosSistema.Usuarios.Add(nuevoUsuario);
+            if (!AccesoDatos.RegistrarUsuario(nuevoUsuario))
+            {
+                return;
+            }
 
             MessageBox.Show(
                 "Usuario registrado exitosamente.\n\n" +
