@@ -9,7 +9,17 @@ public static class ConexionDB
     public static SqlConnection AbrirConexion()
     {
         SqlConnection conexion = new SqlConnection(Configuracion.CadenaConexion);
-        conexion.Open();
-        return conexion;
+
+        try
+        {
+            conexion.Open();
+            return conexion;
+        }
+        catch
+        {
+            // Si no se pudo abrir, liberamos el objeto antes de propagar el error.
+            conexion.Dispose();
+            throw;
+        }
     }
 }
