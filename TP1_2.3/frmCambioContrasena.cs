@@ -43,10 +43,21 @@ namespace TP1_2._3
                 return;
             }
 
-            if (!AccesoDatos.ActualizarContrasena(
-                usuarioActual.IdUsuario,
-                txtNuevaContrasena.Text))
+            try
             {
+                UsuarioRepositorio.ActualizarContrasena(
+                    usuarioActual.IdUsuario,
+                    txtNuevaContrasena.Text,
+                    false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No se pudo guardar la contraseña.\n\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 return;
             }
 

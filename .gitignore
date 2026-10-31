@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Credenciales locales de la base de datos (no commitear)
+appsettings.local.json

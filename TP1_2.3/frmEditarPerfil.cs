@@ -60,6 +60,7 @@ namespace TP1_2._3
         {
             cmbGenero.Items.Add("Femenino");
             cmbGenero.Items.Add("Masculino");
+            cmbGenero.Items.Add("Otro");
             cmbGenero.Items.Add("No binario");
             cmbGenero.Items.Add("Prefiero no decirlo");
 
@@ -214,8 +215,17 @@ namespace TP1_2._3
             usuarioEditar.FechaNacimiento = dtpFechaNacimiento.Value;
             usuarioEditar.Domicilio = ConstruirDomicilio();
 
-            if (!AccesoDatos.ActualizarPerfil(usuarioEditar))
+            try
             {
+                UsuarioRepositorio.ActualizarPerfil(usuarioEditar);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudieron guardar los cambios.\n\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 return;
             }
 

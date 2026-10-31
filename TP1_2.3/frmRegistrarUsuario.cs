@@ -98,7 +98,7 @@ namespace TP1_2._3
 
         private bool ExisteUsuario(string nombreUsuario)
         {
-            return AccesoDatos.ExisteUsuario(nombreUsuario);
+            return UsuarioRepositorio.ExisteNombreUsuario(nombreUsuario);
         }
 
         private string GenerarContrasena()
@@ -255,7 +255,7 @@ namespace TP1_2._3
             }
 
             // Verificar DNI único
-            if (AccesoDatos.ExisteDni(txtDni.Text.Trim()))
+            if (UsuarioRepositorio.ExisteDni(txtDni.Text.Trim()))
             {
                 MessageBox.Show("El DNI ya está registrado en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtDni.Focus();
@@ -282,8 +282,18 @@ namespace TP1_2._3
                 Contrasena = txtContrasena.Text
             };
 
-            if (!AccesoDatos.RegistrarUsuario(nuevoUsuario))
+            try
             {
+                UsuarioRepositorio.Insertar(nuevoUsuario);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No se pudo registrar el usuario.\n\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 return;
             }
 

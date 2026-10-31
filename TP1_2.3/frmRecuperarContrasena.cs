@@ -16,6 +16,7 @@ namespace TP1_2._3
         //variable Resultado de tipo DialogResult la cual capta la respuesta que dio el usuario con
         //respecto a los botones del Messagabox
         DialogResult Resultado;
+        private Usuario? usuarioRecuperado;
 
         public frmRecuperarContrasena()
         {
@@ -112,12 +113,35 @@ namespace TP1_2._3
             }
 
 
-            if (!AccesoDatos.ActualizarContrasenaPorNombreUsuario(
-                txtNombreusuario.Text.Trim(),
-                txtContraseñanueva.Text))
+            if (usuarioRecuperado == null)
             {
+                MessageBox.Show("Primero validá el usuario y el código enviado.",
+                    "RECUPERAR CONTRASEÑA",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
                 return;
             }
+
+            try
+            {
+                UsuarioRepositorio.ActualizarContrasena(
+                    usuarioRecuperado.IdUsuario,
+                    txtContraseñanueva.Text,
+                    false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo actualizar la contraseña.\n\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
+
+            usuarioRecuperado.Contrasena = txtContraseñanueva.Text;
+            usuarioRecuperado.PrimerIngreso = false;
 
             MessageBox.Show("Modificación de contraseña exitosa.",
                             "RECUPERAR CONTRASEÑA",
@@ -146,8 +170,27 @@ namespace TP1_2._3
                 txtNombreusuario.Focus();
                 return;
             }
-            if (AccesoDatos.ExisteUsuario(txtNombreusuario.Text.Trim()))
+            //recorremos la lista de usuarios
+            Usuario? usuarioEncontrado;
+
+            try
             {
+                usuarioEncontrado = UsuarioRepositorio.BuscarPorNombreUsuario(
+                    txtNombreusuario.Text.Trim());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo conectar con la base de datos.\n\n" + ex.Message,
+                    "Error de conexión",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
+
+            if (usuarioEncontrado != null)
+            {
+                usuarioRecuperado = usuarioEncontrado;
                 MessageBox.Show("El código fue enviado al email registrado.",
                                 "RECUPERAR CONTRASEÑA",
                                 MessageBoxButtons.OK,

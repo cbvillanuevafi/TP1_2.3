@@ -1,13 +1,14 @@
 using Microsoft.Data.SqlClient;
 
+/// <summary>
+/// Punto único de acceso a la base de datos.
+/// Usar siempre dentro de un using para liberar la conexión.
+/// </summary>
 public static class ConexionDB
 {
-    private const string CadenaConexion =
-        "Server=DESKTOP-7GJVOD3\\SQLEXPRESS01;Database=Fexi;Integrated Security=True;TrustServerCertificate=True;";
-
-    public static SqlConnection ObtenerConexion()
+    public static SqlConnection AbrirConexion()
     {
-        var conexion = new SqlConnection(CadenaConexion);
+        SqlConnection conexion = new SqlConnection(Configuracion.CadenaConexion);
         conexion.Open();
         return conexion;
     }

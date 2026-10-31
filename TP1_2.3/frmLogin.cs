@@ -9,8 +9,6 @@ namespace TP1_2._3
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-
-            
             txtUsuario.Focus();
 
             txtUsuario.Clear();
@@ -45,10 +43,24 @@ namespace TP1_2._3
                 return;
             }
 
-            Usuario usuarioEncontrado =
-                AccesoDatos.ObtenerUsuarioPorCredenciales(
-                    txtUsuario.Text,
+            Usuario? usuarioEncontrado;
+
+            try
+            {
+                usuarioEncontrado = UsuarioRepositorio.ValidarCredenciales(
+                    txtUsuario.Text.Trim(),
                     txtContrasena.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No se pudo conectar con la base de datos.\n\n" + ex.Message,
+                    "Error de conexión",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
 
             if (usuarioEncontrado == null)
             {
