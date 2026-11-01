@@ -3,33 +3,7 @@
 El proyecto usa **MySQL** a través de `MySqlConnector`. La base se llama `BD_Fexi2`
 y se crea con el script [`BD_Fexi2_mysql.sql`](BD_Fexi2_mysql.sql).
 
-## 1. Crear la base en un hosting gratuito (Aiven)
-
-1. Entrar a <https://aiven.io/free-mysql-database> y registrarse con GitHub o Google
-   (no pide tarjeta ni teléfono).
-2. Crear un servicio **MySQL** con el plan **Free**.
-3. Cuando el servicio esté en estado *Running*, abrir **Connection information**
-   y anotar:
-   - Host
-   - Port (normalmente `3306` o el que indique Aiven)
-   - User (`avnadmin`)
-   - Password
-   - Database (`defaultdb` en el plan gratuito)
-
-## 2. Ejecutar el script
-
-Desde **MySQL Workbench**, **DBeaver** o la consola de Aiven:
-
-- En Aiven el usuario `avnadmin` puede crear bases, así que el script se puede
-  ejecutar tal cual: crea `BD_Fexi2` con las tablas y los datos iniciales
-  (probado contra MySQL 8.4 en el plan gratuito).
-- Si preferís usar la base `defaultdb`, reemplazar `BD_Fexi2` por `defaultdb`
-  en las 3 líneas marcadas con `[NOMBRE DE LA BASE]` y ejecutar.
-
-Al final el script muestra una consulta de verificación que debe devolver 2 filas:
-`admin001` (Administrador) y `empleado001` (Empleado).
-
-## 3. Cadena de conexión
+## 1. Cadena de conexión
 
 La cadena está fija en `TP1_2.3/ConexionDB.cs` (constante `CadenaConexion`).
 No hay archivo de configuración externo, así que la aplicación siempre usa
@@ -40,7 +14,7 @@ No hay archivo de configuración externo, así que la aplicación siempre usa
 > cuenta administradora `avnadmin` no se publica y se usa solo para ejecutar el
 > script.
 
-## 4. Usuarios iniciales
+## 2. Usuarios iniciales
 
 | Usuario       | Contraseña | Tipo          |
 |---------------|------------|---------------|
@@ -50,9 +24,9 @@ No hay archivo de configuración externo, así que la aplicación siempre usa
 Ambos quedan con `primer_ingreso = 1`, por lo que la aplicación pide cambiar la
 contraseña en el primer inicio de sesión.
 
-## Notas del plan gratuito
+## Notas del plan gratuito del hosting
 
 - 1 GB de almacenamiento y 1 GB de RAM.
 - El servicio puede apagarse tras un período de inactividad; se vuelve a encender
-  desde la consola de Aiven.
+  desde la consola de Aiven. **Informar a alumno Maximiliano Montiel si esto sucede.**
 - Usar siempre `SslMode=Required` porque el servidor exige TLS.
