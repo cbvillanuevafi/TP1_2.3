@@ -1,33 +1,33 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
-using Microsoft.Data.SqlClient;
+using Npgsql;
+using NpgsqlTypes;
 
 /// <summary>
 /// Acceso a datos de usuarios sobre las tablas
-/// dbo.Usuarios, dbo.Credenciales, dbo.Generos y dbo.TiposUsuario.
+/// usuarios, credenciales, generos y tipos_usuario (PostgreSQL / Neon).
 /// </summary>
 public static class UsuarioRepositorio
 {
     private const string SelectBase = @"
-SELECT u.IdUsuario,
-       u.Nombre,
-       u.Apellido,
-       u.Dni,
-       u.Telefono,
-       u.Email,
-       u.Domicilio,
-       g.Nombre AS Genero,
-       u.FechaNacimiento,
-       t.Nombre AS TipoUsuario,
-       u.PrimerIngreso,
-       c.IdCredencial,
-       c.NombreUsuario,
-       c.Contrasena
-FROM dbo.Usuarios u
-INNER JOIN dbo.Generos g ON g.IdGenero = u.IdGenero
-INNER JOIN dbo.TiposUsuario t ON t.IdTipoUsuario = u.IdTipoUsuario
-INNER JOIN dbo.Credenciales c ON c.IdUsuario = u.IdUsuario";
+SELECT u.id_usuario       AS ""IdUsuario"",
+       u.nombre           AS ""Nombre"",
+       u.apellido         AS ""Apellido"",
+       u.dni              AS ""Dni"",
+       u.telefono         AS ""Telefono"",
+       u.email            AS ""Email"",
+       u.domicilio        AS ""Domicilio"",
+       g.nombre           AS ""Genero"",
+       u.fecha_nacimiento AS ""FechaNacimiento"",
+       t.nombre           AS ""TipoUsuario"",
+       u.primer_ingreso   AS ""PrimerIngreso"",
+       c.id_credencial    AS ""IdCredencial"",
+       c.nombre_usuario   AS ""NombreUsuario"",
+       c.contrasena       AS ""Contrasena""
+FROM usuarios u
+INNER JOIN generos g ON g.id_genero = u.id_genero
+INNER JOIN tipos_usuario t ON t.id_tipo_usuario = u.id_tipo_usuario
+INNER JOIN credenciales c ON c.id_usuario = u.id_usuario";
 
     /// <summary>
     /// Devuelve el usuario si el nombre de usuario y la contraseña coinciden; si no, null.
@@ -36,16 +36,16 @@ INNER JOIN dbo.Credenciales c ON c.IdUsuario = u.IdUsuario";
     public static Usuario? ValidarCredenciales(string nombreUsuario, string contrasena)
     {
         string sql = SelectBase + @"
-WHERE UPPER(c.NombreUsuario) = UPPER(@NombreUsuario)
-  AND c.Contrasena = @Contrasena";
+WHERE UPPER(c.nombre_usuario) = UPPER(@NombreUsuario)
+  AND c.contrasena = @Contrasena";
 
-        using (SqlConnection cn = ConexionDB.AbrirConexion())
-        using (SqlCommand cmd = new SqlCommand(sql, cn))
+        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
+        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn))
         {
-            Agregar(cmd, "@NombreUsuario", SqlDbType.VarChar, nombreUsuario, 50);
-            Agregar(cmd, "@Contrasena", SqlDbType.VarChar, contrasena, 255);
+            Agregar(cmd, "@NombreUsuario", NpgsqlDbType.Varchar, nombreUsuario, 50);
+            Agregar(cmd, "@Contrasena", NpgsqlDbType.Varchar, contrasena, 255);
 
-            using (SqlDataReader reader = cmd.ExecuteReader())
+            using (NpgsqlDataReader reader = cmd.ExecuteReader())
             {
                 return reader.Read() ? Mapear(reader) : null;
             }
@@ -58,14 +58,14 @@ WHERE UPPER(c.NombreUsuario) = UPPER(@NombreUsuario)
     public static Usuario? BuscarPorNombreUsuario(string nombreUsuario)
     {
         string sql = SelectBase + @"
-WHERE UPPER(c.NombreUsuario) = UPPER(@NombreUsuario)";
+WHERE UPPER(c.nombre_usuario) = UPPER(@NombreUsuario)";
 
-        using (SqlConnection cn = ConexionDB.AbrirConexion())
-        using (SqlCommand cmd = new SqlCommand(sql, cn))
+        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
+        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn))
         {
-            Agregar(cmd, "@NombreUsuario", SqlDbType.VarChar, nombreUsuario, 50);
+            Agregar(cmd, "@NombreUsuario", NpgsqlDbType.Varchar, nombreUsuario, 50);
 
-            using (SqlDataReader reader = cmd.ExecuteReader())
+            using (NpgsqlDataReader reader = cmd.ExecuteReader())
             {
                 return reader.Read() ? Mapear(reader) : null;
             }
@@ -74,13 +74,13 @@ WHERE UPPER(c.NombreUsuario) = UPPER(@NombreUsuario)";
 
     public static List<Usuario> ObtenerTodos()
     {
-        string sql = SelectBase + " ORDER BY u.Apellido, u.Nombre";
+        string sql = SelectBase + " ORDER BY u.apellido, u.nombre";
 
         List<Usuario> usuarios = new List<Usuario>();
 
-        using (SqlConnection cn = ConexionDB.AbrirConexion())
-        using (SqlCommand cmd = new SqlCommand(sql, cn))
-        using (SqlDataReader reader = cmd.ExecuteReader())
+        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
+        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn))
+        using (NpgsqlDataReader reader = cmd.ExecuteReader())
         {
             while (reader.Read())
             {
@@ -95,28 +95,28 @@ WHERE UPPER(c.NombreUsuario) = UPPER(@NombreUsuario)";
     {
         const string sql = @"
 SELECT COUNT(*)
-FROM dbo.Credenciales
-WHERE UPPER(NombreUsuario) = UPPER(@NombreUsuario)";
+FROM credenciales
+WHERE UPPER(nombre_usuario) = UPPER(@NombreUsuario)";
 
-        using (SqlConnection cn = ConexionDB.AbrirConexion())
-        using (SqlCommand cmd = new SqlCommand(sql, cn))
+        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
+        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn))
         {
-            Agregar(cmd, "@NombreUsuario", SqlDbType.VarChar, nombreUsuario, 50);
+            Agregar(cmd, "@NombreUsuario", NpgsqlDbType.Varchar, nombreUsuario, 50);
 
-            return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+            return Convert.ToInt64(cmd.ExecuteScalar()) > 0;
         }
     }
 
     public static bool ExisteDni(string dni)
     {
-        const string sql = "SELECT COUNT(*) FROM dbo.Usuarios WHERE Dni = @Dni";
+        const string sql = "SELECT COUNT(*) FROM usuarios WHERE dni = @Dni";
 
-        using (SqlConnection cn = ConexionDB.AbrirConexion())
-        using (SqlCommand cmd = new SqlCommand(sql, cn))
+        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
+        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn))
         {
-            Agregar(cmd, "@Dni", SqlDbType.VarChar, dni, 20);
+            Agregar(cmd, "@Dni", NpgsqlDbType.Varchar, dni, 20);
 
-            return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+            return Convert.ToInt64(cmd.ExecuteScalar()) > 0;
         }
     }
 
@@ -126,47 +126,50 @@ WHERE UPPER(NombreUsuario) = UPPER(@NombreUsuario)";
     /// </summary>
     public static int Insertar(Usuario usuario)
     {
-        using (SqlConnection cn = ConexionDB.AbrirConexion())
-        using (SqlTransaction tx = cn.BeginTransaction())
+        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
+        using (NpgsqlTransaction tx = cn.BeginTransaction())
         {
             try
             {
-                int idGenero = ObtenerId(cn, tx, "dbo.Generos", "IdGenero", usuario.Genero);
-                int idTipoUsuario = ObtenerId(cn, tx, "dbo.TiposUsuario", "IdTipoUsuario", usuario.TipoUsuario);
+                int idGenero = ObtenerId(cn, tx, "generos", "id_genero", usuario.Genero);
+                int idTipoUsuario = ObtenerId(
+                    cn, tx, "tipos_usuario", "id_tipo_usuario", usuario.TipoUsuario);
 
                 const string sqlUsuario = @"
-INSERT INTO dbo.Usuarios
-    (Nombre, Apellido, Dni, Telefono, Email, Domicilio, IdGenero, FechaNacimiento, IdTipoUsuario, PrimerIngreso)
-OUTPUT INSERTED.IdUsuario
+INSERT INTO usuarios
+    (nombre, apellido, dni, telefono, email, domicilio,
+     id_genero, fecha_nacimiento, id_tipo_usuario, primer_ingreso)
 VALUES
-    (@Nombre, @Apellido, @Dni, @Telefono, @Email, @Domicilio, @IdGenero, @FechaNacimiento, @IdTipoUsuario, @PrimerIngreso);";
+    (@Nombre, @Apellido, @Dni, @Telefono, @Email, @Domicilio,
+     @IdGenero, @FechaNacimiento, @IdTipoUsuario, @PrimerIngreso)
+RETURNING id_usuario";
 
-                using (SqlCommand cmd = new SqlCommand(sqlUsuario, cn, tx))
+                using (NpgsqlCommand cmd = new NpgsqlCommand(sqlUsuario, cn, tx))
                 {
-                    Agregar(cmd, "@Nombre", SqlDbType.VarChar, usuario.Nombre, 50);
-                    Agregar(cmd, "@Apellido", SqlDbType.VarChar, usuario.Apellido, 50);
-                    Agregar(cmd, "@Dni", SqlDbType.VarChar, usuario.Dni, 20);
-                    Agregar(cmd, "@Telefono", SqlDbType.VarChar, usuario.Telefono, 20);
-                    Agregar(cmd, "@Email", SqlDbType.VarChar, usuario.Email, 100);
-                    Agregar(cmd, "@Domicilio", SqlDbType.VarChar, usuario.Domicilio, 200);
-                    Agregar(cmd, "@IdGenero", SqlDbType.Int, idGenero);
-                    Agregar(cmd, "@FechaNacimiento", SqlDbType.Date, usuario.FechaNacimiento.Date);
-                    Agregar(cmd, "@IdTipoUsuario", SqlDbType.Int, idTipoUsuario);
-                    Agregar(cmd, "@PrimerIngreso", SqlDbType.Bit, usuario.PrimerIngreso);
+                    Agregar(cmd, "@Nombre", NpgsqlDbType.Varchar, usuario.Nombre, 50);
+                    Agregar(cmd, "@Apellido", NpgsqlDbType.Varchar, usuario.Apellido, 50);
+                    Agregar(cmd, "@Dni", NpgsqlDbType.Varchar, usuario.Dni, 20);
+                    Agregar(cmd, "@Telefono", NpgsqlDbType.Varchar, usuario.Telefono, 20);
+                    Agregar(cmd, "@Email", NpgsqlDbType.Varchar, usuario.Email, 100);
+                    Agregar(cmd, "@Domicilio", NpgsqlDbType.Varchar, usuario.Domicilio, 200);
+                    Agregar(cmd, "@IdGenero", NpgsqlDbType.Integer, idGenero);
+                    Agregar(cmd, "@FechaNacimiento", NpgsqlDbType.Date, AFecha(usuario.FechaNacimiento));
+                    Agregar(cmd, "@IdTipoUsuario", NpgsqlDbType.Integer, idTipoUsuario);
+                    Agregar(cmd, "@PrimerIngreso", NpgsqlDbType.Boolean, usuario.PrimerIngreso);
 
                     usuario.IdUsuario = Convert.ToInt32(cmd.ExecuteScalar());
                 }
 
                 const string sqlCredencial = @"
-INSERT INTO dbo.Credenciales (IdUsuario, NombreUsuario, Contrasena)
-OUTPUT INSERTED.IdCredencial
-VALUES (@IdUsuario, @NombreUsuario, @Contrasena);";
+INSERT INTO credenciales (id_usuario, nombre_usuario, contrasena)
+VALUES (@IdUsuario, @NombreUsuario, @Contrasena)
+RETURNING id_credencial";
 
-                using (SqlCommand cmd = new SqlCommand(sqlCredencial, cn, tx))
+                using (NpgsqlCommand cmd = new NpgsqlCommand(sqlCredencial, cn, tx))
                 {
-                    Agregar(cmd, "@IdUsuario", SqlDbType.Int, usuario.IdUsuario);
-                    Agregar(cmd, "@NombreUsuario", SqlDbType.VarChar, usuario.NombreUsuario, 50);
-                    Agregar(cmd, "@Contrasena", SqlDbType.VarChar, usuario.Contrasena, 255);
+                    Agregar(cmd, "@IdUsuario", NpgsqlDbType.Integer, usuario.IdUsuario);
+                    Agregar(cmd, "@NombreUsuario", NpgsqlDbType.Varchar, usuario.NombreUsuario, 50);
+                    Agregar(cmd, "@Contrasena", NpgsqlDbType.Varchar, usuario.Contrasena, 255);
 
                     usuario.IdCredencial = Convert.ToInt32(cmd.ExecuteScalar());
                 }
@@ -187,37 +190,38 @@ VALUES (@IdUsuario, @NombreUsuario, @Contrasena);";
     /// </summary>
     public static void ActualizarPerfil(Usuario usuario)
     {
-        using (SqlConnection cn = ConexionDB.AbrirConexion())
-        using (SqlTransaction tx = cn.BeginTransaction())
+        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
+        using (NpgsqlTransaction tx = cn.BeginTransaction())
         {
             try
             {
-                int idGenero = ObtenerId(cn, tx, "dbo.Generos", "IdGenero", usuario.Genero);
-                int idTipoUsuario = ObtenerId(cn, tx, "dbo.TiposUsuario", "IdTipoUsuario", usuario.TipoUsuario);
+                int idGenero = ObtenerId(cn, tx, "generos", "id_genero", usuario.Genero);
+                int idTipoUsuario = ObtenerId(
+                    cn, tx, "tipos_usuario", "id_tipo_usuario", usuario.TipoUsuario);
 
                 const string sql = @"
-UPDATE dbo.Usuarios
-SET Nombre = @Nombre,
-    Apellido = @Apellido,
-    Telefono = @Telefono,
-    Email = @Email,
-    Domicilio = @Domicilio,
-    IdGenero = @IdGenero,
-    FechaNacimiento = @FechaNacimiento,
-    IdTipoUsuario = @IdTipoUsuario
-WHERE IdUsuario = @IdUsuario;";
+UPDATE usuarios
+SET nombre = @Nombre,
+    apellido = @Apellido,
+    telefono = @Telefono,
+    email = @Email,
+    domicilio = @Domicilio,
+    id_genero = @IdGenero,
+    fecha_nacimiento = @FechaNacimiento,
+    id_tipo_usuario = @IdTipoUsuario
+WHERE id_usuario = @IdUsuario";
 
-                using (SqlCommand cmd = new SqlCommand(sql, cn, tx))
+                using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn, tx))
                 {
-                    Agregar(cmd, "@Nombre", SqlDbType.VarChar, usuario.Nombre, 50);
-                    Agregar(cmd, "@Apellido", SqlDbType.VarChar, usuario.Apellido, 50);
-                    Agregar(cmd, "@Telefono", SqlDbType.VarChar, usuario.Telefono, 20);
-                    Agregar(cmd, "@Email", SqlDbType.VarChar, usuario.Email, 100);
-                    Agregar(cmd, "@Domicilio", SqlDbType.VarChar, usuario.Domicilio, 200);
-                    Agregar(cmd, "@IdGenero", SqlDbType.Int, idGenero);
-                    Agregar(cmd, "@FechaNacimiento", SqlDbType.Date, usuario.FechaNacimiento.Date);
-                    Agregar(cmd, "@IdTipoUsuario", SqlDbType.Int, idTipoUsuario);
-                    Agregar(cmd, "@IdUsuario", SqlDbType.Int, usuario.IdUsuario);
+                    Agregar(cmd, "@Nombre", NpgsqlDbType.Varchar, usuario.Nombre, 50);
+                    Agregar(cmd, "@Apellido", NpgsqlDbType.Varchar, usuario.Apellido, 50);
+                    Agregar(cmd, "@Telefono", NpgsqlDbType.Varchar, usuario.Telefono, 20);
+                    Agregar(cmd, "@Email", NpgsqlDbType.Varchar, usuario.Email, 100);
+                    Agregar(cmd, "@Domicilio", NpgsqlDbType.Varchar, usuario.Domicilio, 200);
+                    Agregar(cmd, "@IdGenero", NpgsqlDbType.Integer, idGenero);
+                    Agregar(cmd, "@FechaNacimiento", NpgsqlDbType.Date, AFecha(usuario.FechaNacimiento));
+                    Agregar(cmd, "@IdTipoUsuario", NpgsqlDbType.Integer, idTipoUsuario);
+                    Agregar(cmd, "@IdUsuario", NpgsqlDbType.Integer, usuario.IdUsuario);
 
                     if (cmd.ExecuteNonQuery() == 0)
                     {
@@ -238,25 +242,25 @@ WHERE IdUsuario = @IdUsuario;";
 
     /// <summary>
     /// Cambia la contraseña y el flag de primer ingreso.
-    /// La contraseña está en dbo.Credenciales y el flag en dbo.Usuarios,
+    /// La contraseña está en credenciales y el flag en usuarios,
     /// por eso se actualizan las dos tablas en una transacción.
     /// </summary>
     public static void ActualizarContrasena(int idUsuario, string contrasena, bool primerIngreso)
     {
-        using (SqlConnection cn = ConexionDB.AbrirConexion())
-        using (SqlTransaction tx = cn.BeginTransaction())
+        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
+        using (NpgsqlTransaction tx = cn.BeginTransaction())
         {
             try
             {
                 const string sqlCredencial = @"
-UPDATE dbo.Credenciales
-SET Contrasena = @Contrasena
-WHERE IdUsuario = @IdUsuario;";
+UPDATE credenciales
+SET contrasena = @Contrasena
+WHERE id_usuario = @IdUsuario";
 
-                using (SqlCommand cmd = new SqlCommand(sqlCredencial, cn, tx))
+                using (NpgsqlCommand cmd = new NpgsqlCommand(sqlCredencial, cn, tx))
                 {
-                    Agregar(cmd, "@Contrasena", SqlDbType.VarChar, contrasena, 255);
-                    Agregar(cmd, "@IdUsuario", SqlDbType.Int, idUsuario);
+                    Agregar(cmd, "@Contrasena", NpgsqlDbType.Varchar, contrasena, 255);
+                    Agregar(cmd, "@IdUsuario", NpgsqlDbType.Integer, idUsuario);
 
                     if (cmd.ExecuteNonQuery() == 0)
                     {
@@ -266,14 +270,14 @@ WHERE IdUsuario = @IdUsuario;";
                 }
 
                 const string sqlUsuario = @"
-UPDATE dbo.Usuarios
-SET PrimerIngreso = @PrimerIngreso
-WHERE IdUsuario = @IdUsuario;";
+UPDATE usuarios
+SET primer_ingreso = @PrimerIngreso
+WHERE id_usuario = @IdUsuario";
 
-                using (SqlCommand cmd = new SqlCommand(sqlUsuario, cn, tx))
+                using (NpgsqlCommand cmd = new NpgsqlCommand(sqlUsuario, cn, tx))
                 {
-                    Agregar(cmd, "@PrimerIngreso", SqlDbType.Bit, primerIngreso);
-                    Agregar(cmd, "@IdUsuario", SqlDbType.Int, idUsuario);
+                    Agregar(cmd, "@PrimerIngreso", NpgsqlDbType.Boolean, primerIngreso);
+                    Agregar(cmd, "@IdUsuario", NpgsqlDbType.Integer, idUsuario);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -289,17 +293,17 @@ WHERE IdUsuario = @IdUsuario;";
     }
 
     private static int ObtenerId(
-        SqlConnection cn,
-        SqlTransaction tx,
+        NpgsqlConnection cn,
+        NpgsqlTransaction tx,
         string tabla,
         string columnaId,
         string valor)
     {
-        string sql = $"SELECT {columnaId} FROM {tabla} WHERE Nombre = @Valor";
+        string sql = $"SELECT {columnaId} FROM {tabla} WHERE nombre = @Valor";
 
-        using (SqlCommand cmd = new SqlCommand(sql, cn, tx))
+        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn, tx))
         {
-            Agregar(cmd, "@Valor", SqlDbType.VarChar, valor, 30);
+            Agregar(cmd, "@Valor", NpgsqlDbType.Varchar, valor, 30);
 
             object? resultado = cmd.ExecuteScalar();
 
@@ -313,7 +317,7 @@ WHERE IdUsuario = @IdUsuario;";
         }
     }
 
-    private static Usuario Mapear(SqlDataReader reader)
+    private static Usuario Mapear(NpgsqlDataReader reader)
     {
         return new Usuario
         {
@@ -334,23 +338,32 @@ WHERE IdUsuario = @IdUsuario;";
         };
     }
 
-    private static string LeerTextoOpcional(SqlDataReader reader, string columna)
+    private static string LeerTextoOpcional(NpgsqlDataReader reader, string columna)
     {
         int indice = reader.GetOrdinal(columna);
 
         return reader.IsDBNull(indice) ? string.Empty : reader.GetString(indice);
     }
 
+    /// <summary>
+    /// Npgsql exige DateTimeKind.Unspecified para columnas date/timestamp
+    /// sin zona horaria. DateTime.Today viene como Local, así que lo ajustamos.
+    /// </summary>
+    private static DateTime AFecha(DateTime fecha)
+    {
+        return DateTime.SpecifyKind(fecha.Date, DateTimeKind.Unspecified);
+    }
+
     private static void Agregar(
-        SqlCommand cmd,
+        NpgsqlCommand cmd,
         string nombre,
-        SqlDbType tipo,
+        NpgsqlDbType tipo,
         object? valor,
         int tamano = 0)
     {
-        SqlParameter parametro = tamano > 0
-            ? new SqlParameter(nombre, tipo, tamano)
-            : new SqlParameter(nombre, tipo);
+        NpgsqlParameter parametro = tamano > 0
+            ? new NpgsqlParameter(nombre, tipo, tamano)
+            : new NpgsqlParameter(nombre, tipo);
 
         parametro.Value = valor ?? DBNull.Value;
         cmd.Parameters.Add(parametro);

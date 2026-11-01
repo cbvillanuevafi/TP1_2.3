@@ -1,14 +1,14 @@
-using Microsoft.Data.SqlClient;
+using Npgsql;
 
 /// <summary>
-/// Punto único de acceso a la base de datos.
+/// Punto único de acceso a la base de datos PostgreSQL (Neon).
 /// Usar siempre dentro de un using para liberar la conexión.
 /// </summary>
 public static class ConexionDB
 {
-    public static SqlConnection AbrirConexion()
+    public static NpgsqlConnection AbrirConexion()
     {
-        SqlConnection conexion = new SqlConnection(Configuracion.CadenaConexion);
+        NpgsqlConnection conexion = new NpgsqlConnection(Configuracion.CadenaConexion);
 
         try
         {
