@@ -1,14 +1,14 @@
-using Npgsql;
+using MySqlConnector;
 
 /// <summary>
-/// Punto único de acceso a la base de datos PostgreSQL (Neon).
+/// Punto único de acceso a la base de datos MySQL / MariaDB.
 /// Usar siempre dentro de un using para liberar la conexión.
 /// </summary>
 public static class ConexionDB
 {
-    public static NpgsqlConnection AbrirConexion()
+    public static MySqlConnection AbrirConexion()
     {
-        NpgsqlConnection conexion = new NpgsqlConnection(Configuracion.CadenaConexion);
+        MySqlConnection conexion = new MySqlConnection(Configuracion.CadenaConexion);
 
         try
         {

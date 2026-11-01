@@ -1,29 +1,28 @@
 using System;
 using System.Collections.Generic;
-using Npgsql;
-using NpgsqlTypes;
+using MySqlConnector;
 
 /// <summary>
 /// Acceso a datos de usuarios sobre las tablas
-/// usuarios, credenciales, generos y tipos_usuario (PostgreSQL / Neon).
+/// usuarios, credenciales, generos y tipos_usuario (MySQL / MariaDB).
 /// </summary>
 public static class UsuarioRepositorio
 {
     private const string SelectBase = @"
-SELECT u.id_usuario       AS ""IdUsuario"",
-       u.nombre           AS ""Nombre"",
-       u.apellido         AS ""Apellido"",
-       u.dni              AS ""Dni"",
-       u.telefono         AS ""Telefono"",
-       u.email            AS ""Email"",
-       u.domicilio        AS ""Domicilio"",
-       g.nombre           AS ""Genero"",
-       u.fecha_nacimiento AS ""FechaNacimiento"",
-       t.nombre           AS ""TipoUsuario"",
-       u.primer_ingreso   AS ""PrimerIngreso"",
-       c.id_credencial    AS ""IdCredencial"",
-       c.nombre_usuario   AS ""NombreUsuario"",
-       c.contrasena       AS ""Contrasena""
+SELECT u.id_usuario       AS IdUsuario,
+       u.nombre           AS Nombre,
+       u.apellido         AS Apellido,
+       u.dni              AS Dni,
+       u.telefono         AS Telefono,
+       u.email            AS Email,
+       u.domicilio        AS Domicilio,
+       g.nombre           AS Genero,
+       u.fecha_nacimiento AS FechaNacimiento,
+       t.nombre           AS TipoUsuario,
+       u.primer_ingreso   AS PrimerIngreso,
+       c.id_credencial    AS IdCredencial,
+       c.nombre_usuario   AS NombreUsuario,
+       c.contrasena       AS Contrasena
 FROM usuarios u
 INNER JOIN generos g ON g.id_genero = u.id_genero
 INNER JOIN tipos_usuario t ON t.id_tipo_usuario = u.id_tipo_usuario
@@ -39,13 +38,13 @@ INNER JOIN credenciales c ON c.id_usuario = u.id_usuario";
 WHERE UPPER(c.nombre_usuario) = UPPER(@NombreUsuario)
   AND c.contrasena = @Contrasena";
 
-        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
-        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn))
+        using (MySqlConnection cn = ConexionDB.AbrirConexion())
+        using (MySqlCommand cmd = new MySqlCommand(sql, cn))
         {
-            Agregar(cmd, "@NombreUsuario", NpgsqlDbType.Varchar, nombreUsuario, 50);
-            Agregar(cmd, "@Contrasena", NpgsqlDbType.Varchar, contrasena, 255);
+            Agregar(cmd, "@NombreUsuario", MySqlDbType.VarChar, nombreUsuario, 50);
+            Agregar(cmd, "@Contrasena", MySqlDbType.VarChar, contrasena, 255);
 
-            using (NpgsqlDataReader reader = cmd.ExecuteReader())
+            using (MySqlDataReader reader = cmd.ExecuteReader())
             {
                 return reader.Read() ? Mapear(reader) : null;
             }
@@ -60,12 +59,12 @@ WHERE UPPER(c.nombre_usuario) = UPPER(@NombreUsuario)
         string sql = SelectBase + @"
 WHERE UPPER(c.nombre_usuario) = UPPER(@NombreUsuario)";
 
-        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
-        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn))
+        using (MySqlConnection cn = ConexionDB.AbrirConexion())
+        using (MySqlCommand cmd = new MySqlCommand(sql, cn))
         {
-            Agregar(cmd, "@NombreUsuario", NpgsqlDbType.Varchar, nombreUsuario, 50);
+            Agregar(cmd, "@NombreUsuario", MySqlDbType.VarChar, nombreUsuario, 50);
 
-            using (NpgsqlDataReader reader = cmd.ExecuteReader())
+            using (MySqlDataReader reader = cmd.ExecuteReader())
             {
                 return reader.Read() ? Mapear(reader) : null;
             }
@@ -78,9 +77,9 @@ WHERE UPPER(c.nombre_usuario) = UPPER(@NombreUsuario)";
 
         List<Usuario> usuarios = new List<Usuario>();
 
-        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
-        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn))
-        using (NpgsqlDataReader reader = cmd.ExecuteReader())
+        using (MySqlConnection cn = ConexionDB.AbrirConexion())
+        using (MySqlCommand cmd = new MySqlCommand(sql, cn))
+        using (MySqlDataReader reader = cmd.ExecuteReader())
         {
             while (reader.Read())
             {
@@ -98,10 +97,10 @@ SELECT COUNT(*)
 FROM credenciales
 WHERE UPPER(nombre_usuario) = UPPER(@NombreUsuario)";
 
-        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
-        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn))
+        using (MySqlConnection cn = ConexionDB.AbrirConexion())
+        using (MySqlCommand cmd = new MySqlCommand(sql, cn))
         {
-            Agregar(cmd, "@NombreUsuario", NpgsqlDbType.Varchar, nombreUsuario, 50);
+            Agregar(cmd, "@NombreUsuario", MySqlDbType.VarChar, nombreUsuario, 50);
 
             return Convert.ToInt64(cmd.ExecuteScalar()) > 0;
         }
@@ -111,10 +110,10 @@ WHERE UPPER(nombre_usuario) = UPPER(@NombreUsuario)";
     {
         const string sql = "SELECT COUNT(*) FROM usuarios WHERE dni = @Dni";
 
-        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
-        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn))
+        using (MySqlConnection cn = ConexionDB.AbrirConexion())
+        using (MySqlCommand cmd = new MySqlCommand(sql, cn))
         {
-            Agregar(cmd, "@Dni", NpgsqlDbType.Varchar, dni, 20);
+            Agregar(cmd, "@Dni", MySqlDbType.VarChar, dni, 20);
 
             return Convert.ToInt64(cmd.ExecuteScalar()) > 0;
         }
@@ -126,8 +125,8 @@ WHERE UPPER(nombre_usuario) = UPPER(@NombreUsuario)";
     /// </summary>
     public static int Insertar(Usuario usuario)
     {
-        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
-        using (NpgsqlTransaction tx = cn.BeginTransaction())
+        using (MySqlConnection cn = ConexionDB.AbrirConexion())
+        using (MySqlTransaction tx = cn.BeginTransaction())
         {
             try
             {
@@ -141,38 +140,40 @@ INSERT INTO usuarios
      id_genero, fecha_nacimiento, id_tipo_usuario, primer_ingreso)
 VALUES
     (@Nombre, @Apellido, @Dni, @Telefono, @Email, @Domicilio,
-     @IdGenero, @FechaNacimiento, @IdTipoUsuario, @PrimerIngreso)
-RETURNING id_usuario";
+     @IdGenero, @FechaNacimiento, @IdTipoUsuario, @PrimerIngreso)";
 
-                using (NpgsqlCommand cmd = new NpgsqlCommand(sqlUsuario, cn, tx))
+                using (MySqlCommand cmd = new MySqlCommand(sqlUsuario, cn, tx))
                 {
-                    Agregar(cmd, "@Nombre", NpgsqlDbType.Varchar, usuario.Nombre, 50);
-                    Agregar(cmd, "@Apellido", NpgsqlDbType.Varchar, usuario.Apellido, 50);
-                    Agregar(cmd, "@Dni", NpgsqlDbType.Varchar, usuario.Dni, 20);
-                    Agregar(cmd, "@Telefono", NpgsqlDbType.Varchar, usuario.Telefono, 20);
-                    Agregar(cmd, "@Email", NpgsqlDbType.Varchar, usuario.Email, 100);
-                    Agregar(cmd, "@Domicilio", NpgsqlDbType.Varchar, usuario.Domicilio, 200);
-                    Agregar(cmd, "@IdGenero", NpgsqlDbType.Integer, idGenero);
-                    Agregar(cmd, "@FechaNacimiento", NpgsqlDbType.Date, AFecha(usuario.FechaNacimiento));
-                    Agregar(cmd, "@IdTipoUsuario", NpgsqlDbType.Integer, idTipoUsuario);
-                    Agregar(cmd, "@PrimerIngreso", NpgsqlDbType.Boolean, usuario.PrimerIngreso);
+                    Agregar(cmd, "@Nombre", MySqlDbType.VarChar, usuario.Nombre, 50);
+                    Agregar(cmd, "@Apellido", MySqlDbType.VarChar, usuario.Apellido, 50);
+                    Agregar(cmd, "@Dni", MySqlDbType.VarChar, usuario.Dni, 20);
+                    Agregar(cmd, "@Telefono", MySqlDbType.VarChar, usuario.Telefono, 20);
+                    Agregar(cmd, "@Email", MySqlDbType.VarChar, usuario.Email, 100);
+                    Agregar(cmd, "@Domicilio", MySqlDbType.VarChar, usuario.Domicilio, 200);
+                    Agregar(cmd, "@IdGenero", MySqlDbType.Int32, idGenero);
+                    Agregar(cmd, "@FechaNacimiento", MySqlDbType.Date, AFecha(usuario.FechaNacimiento));
+                    Agregar(cmd, "@IdTipoUsuario", MySqlDbType.Int32, idTipoUsuario);
+                    Agregar(cmd, "@PrimerIngreso", MySqlDbType.Byte, usuario.PrimerIngreso ? (byte)1 : (byte)0);
 
-                    usuario.IdUsuario = Convert.ToInt32(cmd.ExecuteScalar());
+                    cmd.ExecuteNonQuery();
                 }
+
+                usuario.IdUsuario = UltimoId(cn, tx);
 
                 const string sqlCredencial = @"
 INSERT INTO credenciales (id_usuario, nombre_usuario, contrasena)
-VALUES (@IdUsuario, @NombreUsuario, @Contrasena)
-RETURNING id_credencial";
+VALUES (@IdUsuario, @NombreUsuario, @Contrasena)";
 
-                using (NpgsqlCommand cmd = new NpgsqlCommand(sqlCredencial, cn, tx))
+                using (MySqlCommand cmd = new MySqlCommand(sqlCredencial, cn, tx))
                 {
-                    Agregar(cmd, "@IdUsuario", NpgsqlDbType.Integer, usuario.IdUsuario);
-                    Agregar(cmd, "@NombreUsuario", NpgsqlDbType.Varchar, usuario.NombreUsuario, 50);
-                    Agregar(cmd, "@Contrasena", NpgsqlDbType.Varchar, usuario.Contrasena, 255);
+                    Agregar(cmd, "@IdUsuario", MySqlDbType.Int32, usuario.IdUsuario);
+                    Agregar(cmd, "@NombreUsuario", MySqlDbType.VarChar, usuario.NombreUsuario, 50);
+                    Agregar(cmd, "@Contrasena", MySqlDbType.VarChar, usuario.Contrasena, 255);
 
-                    usuario.IdCredencial = Convert.ToInt32(cmd.ExecuteScalar());
+                    cmd.ExecuteNonQuery();
                 }
+
+                usuario.IdCredencial = UltimoId(cn, tx);
 
                 tx.Commit();
                 return usuario.IdUsuario;
@@ -190,8 +191,8 @@ RETURNING id_credencial";
     /// </summary>
     public static void ActualizarPerfil(Usuario usuario)
     {
-        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
-        using (NpgsqlTransaction tx = cn.BeginTransaction())
+        using (MySqlConnection cn = ConexionDB.AbrirConexion())
+        using (MySqlTransaction tx = cn.BeginTransaction())
         {
             try
             {
@@ -211,17 +212,17 @@ SET nombre = @Nombre,
     id_tipo_usuario = @IdTipoUsuario
 WHERE id_usuario = @IdUsuario";
 
-                using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn, tx))
+                using (MySqlCommand cmd = new MySqlCommand(sql, cn, tx))
                 {
-                    Agregar(cmd, "@Nombre", NpgsqlDbType.Varchar, usuario.Nombre, 50);
-                    Agregar(cmd, "@Apellido", NpgsqlDbType.Varchar, usuario.Apellido, 50);
-                    Agregar(cmd, "@Telefono", NpgsqlDbType.Varchar, usuario.Telefono, 20);
-                    Agregar(cmd, "@Email", NpgsqlDbType.Varchar, usuario.Email, 100);
-                    Agregar(cmd, "@Domicilio", NpgsqlDbType.Varchar, usuario.Domicilio, 200);
-                    Agregar(cmd, "@IdGenero", NpgsqlDbType.Integer, idGenero);
-                    Agregar(cmd, "@FechaNacimiento", NpgsqlDbType.Date, AFecha(usuario.FechaNacimiento));
-                    Agregar(cmd, "@IdTipoUsuario", NpgsqlDbType.Integer, idTipoUsuario);
-                    Agregar(cmd, "@IdUsuario", NpgsqlDbType.Integer, usuario.IdUsuario);
+                    Agregar(cmd, "@Nombre", MySqlDbType.VarChar, usuario.Nombre, 50);
+                    Agregar(cmd, "@Apellido", MySqlDbType.VarChar, usuario.Apellido, 50);
+                    Agregar(cmd, "@Telefono", MySqlDbType.VarChar, usuario.Telefono, 20);
+                    Agregar(cmd, "@Email", MySqlDbType.VarChar, usuario.Email, 100);
+                    Agregar(cmd, "@Domicilio", MySqlDbType.VarChar, usuario.Domicilio, 200);
+                    Agregar(cmd, "@IdGenero", MySqlDbType.Int32, idGenero);
+                    Agregar(cmd, "@FechaNacimiento", MySqlDbType.Date, AFecha(usuario.FechaNacimiento));
+                    Agregar(cmd, "@IdTipoUsuario", MySqlDbType.Int32, idTipoUsuario);
+                    Agregar(cmd, "@IdUsuario", MySqlDbType.Int32, usuario.IdUsuario);
 
                     if (cmd.ExecuteNonQuery() == 0)
                     {
@@ -247,8 +248,8 @@ WHERE id_usuario = @IdUsuario";
     /// </summary>
     public static void ActualizarContrasena(int idUsuario, string contrasena, bool primerIngreso)
     {
-        using (NpgsqlConnection cn = ConexionDB.AbrirConexion())
-        using (NpgsqlTransaction tx = cn.BeginTransaction())
+        using (MySqlConnection cn = ConexionDB.AbrirConexion())
+        using (MySqlTransaction tx = cn.BeginTransaction())
         {
             try
             {
@@ -257,10 +258,10 @@ UPDATE credenciales
 SET contrasena = @Contrasena
 WHERE id_usuario = @IdUsuario";
 
-                using (NpgsqlCommand cmd = new NpgsqlCommand(sqlCredencial, cn, tx))
+                using (MySqlCommand cmd = new MySqlCommand(sqlCredencial, cn, tx))
                 {
-                    Agregar(cmd, "@Contrasena", NpgsqlDbType.Varchar, contrasena, 255);
-                    Agregar(cmd, "@IdUsuario", NpgsqlDbType.Integer, idUsuario);
+                    Agregar(cmd, "@Contrasena", MySqlDbType.VarChar, contrasena, 255);
+                    Agregar(cmd, "@IdUsuario", MySqlDbType.Int32, idUsuario);
 
                     if (cmd.ExecuteNonQuery() == 0)
                     {
@@ -274,10 +275,10 @@ UPDATE usuarios
 SET primer_ingreso = @PrimerIngreso
 WHERE id_usuario = @IdUsuario";
 
-                using (NpgsqlCommand cmd = new NpgsqlCommand(sqlUsuario, cn, tx))
+                using (MySqlCommand cmd = new MySqlCommand(sqlUsuario, cn, tx))
                 {
-                    Agregar(cmd, "@PrimerIngreso", NpgsqlDbType.Boolean, primerIngreso);
-                    Agregar(cmd, "@IdUsuario", NpgsqlDbType.Integer, idUsuario);
+                    Agregar(cmd, "@PrimerIngreso", MySqlDbType.Byte, primerIngreso ? (byte)1 : (byte)0);
+                    Agregar(cmd, "@IdUsuario", MySqlDbType.Int32, idUsuario);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -293,17 +294,17 @@ WHERE id_usuario = @IdUsuario";
     }
 
     private static int ObtenerId(
-        NpgsqlConnection cn,
-        NpgsqlTransaction tx,
+        MySqlConnection cn,
+        MySqlTransaction tx,
         string tabla,
         string columnaId,
         string valor)
     {
         string sql = $"SELECT {columnaId} FROM {tabla} WHERE nombre = @Valor";
 
-        using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cn, tx))
+        using (MySqlCommand cmd = new MySqlCommand(sql, cn, tx))
         {
-            Agregar(cmd, "@Valor", NpgsqlDbType.Varchar, valor, 30);
+            Agregar(cmd, "@Valor", MySqlDbType.VarChar, valor, 30);
 
             object? resultado = cmd.ExecuteScalar();
 
@@ -317,7 +318,19 @@ WHERE id_usuario = @IdUsuario";
         }
     }
 
-    private static Usuario Mapear(NpgsqlDataReader reader)
+    /// <summary>
+    /// MySQL no tiene OUTPUT/RETURNING: se consulta LAST_INSERT_ID()
+    /// dentro de la misma conexión y transacción.
+    /// </summary>
+    private static int UltimoId(MySqlConnection cn, MySqlTransaction tx)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("SELECT LAST_INSERT_ID()", cn, tx))
+        {
+            return Convert.ToInt32(cmd.ExecuteScalar());
+        }
+    }
+
+    private static Usuario Mapear(MySqlDataReader reader)
     {
         return new Usuario
         {
@@ -338,7 +351,7 @@ WHERE id_usuario = @IdUsuario";
         };
     }
 
-    private static string LeerTextoOpcional(NpgsqlDataReader reader, string columna)
+    private static string LeerTextoOpcional(MySqlDataReader reader, string columna)
     {
         int indice = reader.GetOrdinal(columna);
 
@@ -346,8 +359,8 @@ WHERE id_usuario = @IdUsuario";
     }
 
     /// <summary>
-    /// Npgsql exige DateTimeKind.Unspecified para columnas date/timestamp
-    /// sin zona horaria. DateTime.Today viene como Local, así que lo ajustamos.
+    /// Normaliza la fecha a Unspecified para que MySqlConnector la guarde
+    /// como DATE sin conversiones de zona horaria.
     /// </summary>
     private static DateTime AFecha(DateTime fecha)
     {
@@ -355,15 +368,18 @@ WHERE id_usuario = @IdUsuario";
     }
 
     private static void Agregar(
-        NpgsqlCommand cmd,
+        MySqlCommand cmd,
         string nombre,
-        NpgsqlDbType tipo,
+        MySqlDbType tipo,
         object? valor,
         int tamano = 0)
     {
-        NpgsqlParameter parametro = tamano > 0
-            ? new NpgsqlParameter(nombre, tipo, tamano)
-            : new NpgsqlParameter(nombre, tipo);
+        MySqlParameter parametro = new MySqlParameter(nombre, tipo);
+
+        if (tamano > 0)
+        {
+            parametro.Size = tamano;
+        }
 
         parametro.Value = valor ?? DBNull.Value;
         cmd.Parameters.Add(parametro);
