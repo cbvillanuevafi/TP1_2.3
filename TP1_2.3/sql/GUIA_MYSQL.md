@@ -29,9 +29,14 @@ Desde **MySQL Workbench**, **DBeaver** o la consola de Aiven:
 Al final el script muestra una consulta de verificación que debe devolver 2 filas:
 `admin001` (Administrador) y `empleado001` (Empleado).
 
-## 3. Configurar la cadena de conexión
+## 3. Cadena de conexión
 
-Crear el archivo `TP1_2.3/appsettings.local.json` (está en `.gitignore`, no se sube):
+La cadena real ya está en `TP1_2.3/appsettings.json`, que se copia junto al `.exe`.
+Por eso el proyecto funciona al clonarlo, sin configurar nada.
+
+Si hace falta usar otra base (por ejemplo para pruebas locales), crear
+`TP1_2.3/appsettings.local.json` con la misma estructura; ese archivo está en
+`.gitignore` y sus valores pisan a los de `appsettings.json`:
 
 ```json
 {
@@ -41,8 +46,10 @@ Crear el archivo `TP1_2.3/appsettings.local.json` (está en `.gitignore`, no se 
 }
 ```
 
-Reemplazar `HOST`, `PUERTO`, `CLAVE` y, si corresponde, el nombre de la base.
-Si el proyecto está publicado, el archivo debe copiarse junto al `.exe`.
+> La cadena de `appsettings.json` queda visible en el repositorio. El usuario
+> `fexi_app` solo tiene permisos de datos (`SELECT`, `INSERT`, `UPDATE`, `DELETE`)
+> sobre `BD_Fexi2`: no puede borrar tablas ni la base. La cuenta administradora
+> `avnadmin` no se publica y se usa solo para ejecutar el script.
 
 ## 4. Usuarios iniciales
 
