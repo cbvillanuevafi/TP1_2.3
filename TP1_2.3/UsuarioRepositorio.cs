@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using MySqlConnector;
 
 /// <summary>
@@ -69,25 +67,6 @@ WHERE UPPER(c.nombre_usuario) = UPPER(@NombreUsuario)";
                 return reader.Read() ? Mapear(reader) : null;
             }
         }
-    }
-
-    public static List<Usuario> ObtenerTodos()
-    {
-        string sql = SelectBase + " ORDER BY u.apellido, u.nombre";
-
-        List<Usuario> usuarios = new List<Usuario>();
-
-        using (MySqlConnection cn = ConexionDB.AbrirConexion())
-        using (MySqlCommand cmd = new MySqlCommand(sql, cn))
-        using (MySqlDataReader reader = cmd.ExecuteReader())
-        {
-            while (reader.Read())
-            {
-                usuarios.Add(Mapear(reader));
-            }
-        }
-
-        return usuarios;
     }
 
     public static bool ExisteNombreUsuario(string nombreUsuario)
