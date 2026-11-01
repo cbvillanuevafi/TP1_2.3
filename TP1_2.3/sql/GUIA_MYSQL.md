@@ -31,25 +31,14 @@ Al final el script muestra una consulta de verificación que debe devolver 2 fil
 
 ## 3. Cadena de conexión
 
-La cadena real ya está en `TP1_2.3/appsettings.json`, que se copia junto al `.exe`.
-Por eso el proyecto funciona al clonarlo, sin configurar nada.
+La cadena está fija en `TP1_2.3/ConexionDB.cs` (constante `CadenaConexion`).
+No hay archivo de configuración externo, así que la aplicación siempre usa
+`BD_Fexi2` en Aiven: no se puede apuntar a otra base sin recompilar.
 
-Si hace falta usar otra base (por ejemplo para pruebas locales), crear
-`TP1_2.3/appsettings.local.json` con la misma estructura; ese archivo está en
-`.gitignore` y sus valores pisan a los de `appsettings.json`:
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=HOST;Port=PUERTO;Database=BD_Fexi2;User ID=avnadmin;Password=CLAVE;SslMode=Required;Connection Timeout=30;"
-  }
-}
-```
-
-> La cadena de `appsettings.json` queda visible en el repositorio. El usuario
-> `fexi_app` solo tiene permisos de datos (`SELECT`, `INSERT`, `UPDATE`, `DELETE`)
-> sobre `BD_Fexi2`: no puede borrar tablas ni la base. La cuenta administradora
-> `avnadmin` no se publica y se usa solo para ejecutar el script.
+> El usuario `fexi_app` solo tiene permisos de datos (`SELECT`, `INSERT`,
+> `UPDATE`, `DELETE`) sobre `BD_Fexi2`: no puede borrar tablas ni la base. La
+> cuenta administradora `avnadmin` no se publica y se usa solo para ejecutar el
+> script.
 
 ## 4. Usuarios iniciales
 
